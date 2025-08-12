@@ -3,6 +3,7 @@ namespace EspacioMazo
 {
     public class Mazo{
         private List<Carta> naipes = new List<Carta>();
+        public List<Carta> Naipes => naipes;
         public Mazo(){
             for (int i = 0; i < 4; i++)
             {

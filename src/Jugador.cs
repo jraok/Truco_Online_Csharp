@@ -16,8 +16,8 @@ namespace EspacioJugador
             mano = new List<Carta>(3);
         }
 
-        public void RecibirCarta(Carta carta){
-            if (mano.Count() < 3) mano.Add(carta);
+        public void RecibirCartas(List<Carta> cartas){
+            if ((mano.Count() + cartas.Count()) <= 3) mano.AddRange(cartas);
             else Console.WriteLine("El jugador ya tiene 3 cartas");
         }
 
