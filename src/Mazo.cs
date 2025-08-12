@@ -10,7 +10,7 @@ namespace EspacioMazo
                 {
                     if (j != 8 && j != 9)
                     {
-                        cartas.Add(new Carta((palos)i, j));
+                        cartas.Add(new Carta((Palos)i, j));
                     }
                 }
             }
