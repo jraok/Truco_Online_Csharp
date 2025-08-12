@@ -2,7 +2,7 @@ using EspacioCarta;
 namespace EspacioMazo
 {
     public class Mazo{
-        private List<Carta> cartas = new List<Carta>();
+        private List<Carta> naipes = new List<Carta>();
         public Mazo(){
             for (int i = 0; i < 4; i++)
             {
@@ -10,10 +10,21 @@ namespace EspacioMazo
                 {
                     if (j != 8 && j != 9)
                     {
-                        cartas.Add(new Carta((Palos)i, j));
+                        naipes.Add(new Carta((Palos)i, j));
                     }
                 }
             }
         }
+        public void Barajar(){
+            Random rnd = new Random();
+            naipes = naipes.OrderBy(x => rnd.Next()).ToList();
+        }
+
+        public List<Carta> Repartir(int cantidad){
+            List<Carta> mano = naipes.Take(cantidad).ToList();
+            naipes.RemoveRange(0,cantidad);
+            return mano;
+        }
+        
     }
 }
