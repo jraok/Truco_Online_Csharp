@@ -41,7 +41,7 @@ namespace EspacioJugador{
             else return carta.Numero;
         }
 
-        public int CalcularEnvido(List<Carta> mano){
+        public int CalcularEnvido(){
             int puntos = 0;
             for (int i = 0; i < mano.Count; i++)
             {
@@ -57,11 +57,11 @@ namespace EspacioJugador{
             if (puntos == 0) puntos = mano.Max(carta => ValorEnvido(carta));
             return puntos;
         }
-        public int CalcularFlor(List<Carta> mano){
+        public int CalcularFlor(){
             int puntos = 0;
             if (mano[0].Palo == mano[1].Palo && mano[1].Palo == mano[2].Palo)
             {
-                puntos = mano.Sum(carta => ValorEnvido(carta));
+                puntos = mano.Sum(carta => ValorEnvido(carta)) + 20;
             }
             return puntos;
         }
