@@ -30,5 +30,15 @@ class Program{
 
         Console.WriteLine($"Cantidad de cartas en Mazo: {mazo.Naipes.Count}");
 
+        jugador1.CalcularEnvido();
+        jugador1.CalcularFlor();
+        jugador2.CalcularEnvido();
+        jugador2.CalcularFlor();
+
+        Console.WriteLine($"Puntos del envido de Jugador1: {jugador1.PuntosEnvido}");
+        Console.WriteLine($"Puntos del envido de Jugador2: {jugador2.PuntosEnvido}");
+        Console.WriteLine($"Puntos de flor de Jugador1: {jugador1.PuntosFlor}");
+        Console.WriteLine($"Puntos de flor de Jugador2: {jugador2.PuntosFlor}");
+        
     }
 }

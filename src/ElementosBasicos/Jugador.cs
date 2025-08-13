@@ -46,7 +46,7 @@ namespace EspacioJugador{
         }
 
         public void CalcularEnvido(){
-            int puntosEnvido = 0;
+            puntosEnvido = 0;
             for (int i = 0; i < mano.Count(); i++)
             {
                 for (int j = i+1 ; j < mano.Count(); j++)
