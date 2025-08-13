@@ -1,11 +1,11 @@
 using EspacioCarta;
-namespace EspacioJugador
-{
+namespace EspacioJugador{
     public class Jugador{
         private string nombre;
         private int puntaje;
         private List<Carta> mano;
-
+        public int PuntosEnvido { get; set; }
+        public int PuntosFlor { get; set; }
         public string Nombre => nombre;
         public int Puntaje => puntaje;
         public List<Carta> Mano => mano;
@@ -35,6 +35,35 @@ namespace EspacioJugador
 
         public void SumarPuntos(int puntos){
             puntaje += puntos;
+        }
+        public int ValorEnvido(Carta carta){
+            if (carta.Numero >= 10) return 0;
+            else return carta.Numero;
+        }
+
+        public int CalcularEnvido(List<Carta> mano){
+            int puntos = 0;
+            for (int i = 0; i < mano.Count; i++)
+            {
+                for (int j = i+1 ; j < mano.Count; j++)
+                {
+                    if (mano[i].Palo == mano[j].Palo)
+                    {
+                        int suma = ValorEnvido(mano[i]) + ValorEnvido(mano[j]) + 20;
+                        if (suma > puntos) puntos = suma;
+                    }
+                }
+            }
+            if (puntos == 0) puntos = mano.Max(carta => ValorEnvido(carta));
+            return puntos;
+        }
+        public int CalcularFlor(List<Carta> mano){
+            int puntos = 0;
+            if (mano[0].Palo == mano[1].Palo && mano[1].Palo == mano[2].Palo)
+            {
+                puntos = mano.Sum(carta => ValorEnvido(carta));
+            }
+            return puntos;
         }
     }
 }
