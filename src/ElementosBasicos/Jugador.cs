@@ -1,14 +1,18 @@
 using EspacioCarta;
 namespace EspacioJugador{
     public class Jugador{
+        private const int BonusEnvido = 20;
         private string nombre;
         private int puntaje;
         private List<Carta> mano;
-        public int PuntosEnvido { get; set; }
-        public int PuntosFlor { get; set; }
+        private int puntosEnvido;
+        private int puntosFlor;
         public string Nombre => nombre;
         public int Puntaje => puntaje;
         public List<Carta> Mano => mano;
+        public int PuntosEnvido => puntosEnvido;
+        public int PuntosFlor => puntosFlor;
+
 
         public Jugador(string nombre){
             this.nombre = nombre;
@@ -41,29 +45,27 @@ namespace EspacioJugador{
             else return carta.Numero;
         }
 
-        public int CalcularEnvido(){
-            int puntos = 0;
-            for (int i = 0; i < mano.Count; i++)
+        public void CalcularEnvido(){
+            int puntosEnvido = 0;
+            for (int i = 0; i < mano.Count(); i++)
             {
-                for (int j = i+1 ; j < mano.Count; j++)
+                for (int j = i+1 ; j < mano.Count(); j++)
                 {
                     if (mano[i].Palo == mano[j].Palo)
                     {
-                        int suma = ValorEnvido(mano[i]) + ValorEnvido(mano[j]) + 20;
-                        if (suma > puntos) puntos = suma;
+                        int suma = ValorEnvido(mano[i]) + ValorEnvido(mano[j]) + BonusEnvido;
+                        if (suma > puntosEnvido) puntosEnvido = suma;
                     }
                 }
             }
-            if (puntos == 0) puntos = mano.Max(carta => ValorEnvido(carta));
-            return puntos;
+            if (puntosEnvido == 0) puntosEnvido = mano.Max(carta => ValorEnvido(carta));
         }
-        public int CalcularFlor(){
-            int puntos = 0;
-            if (mano[0].Palo == mano[1].Palo && mano[1].Palo == mano[2].Palo)
+        public void CalcularFlor(){
+            puntosFlor = 0;
+            if (mano.Count() == 3 && mano[0].Palo == mano[1].Palo && mano[1].Palo == mano[2].Palo)
             {
-                puntos = mano.Sum(carta => ValorEnvido(carta)) + 20;
+                puntosFlor = mano.Sum(carta => ValorEnvido(carta)) + BonusEnvido;
             }
-            return puntos;
         }
     }
 }
