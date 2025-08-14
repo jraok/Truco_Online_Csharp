@@ -39,8 +39,7 @@ namespace EspacioFlor {
                 puntosJugada = 0;
                 return;
             }
-            CantoFlor flor = jugada.Last();
-            puntosJugada = flor.Puntos;
+            puntosJugada = jugada.Last().Puntos;
         }
     }
 }
