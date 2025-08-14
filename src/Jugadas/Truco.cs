@@ -8,10 +8,13 @@ namespace EspacioTruco{
     {
         private TipoTruco tipo;
         private int puntos;
+        private string jugador;
         public TipoTruco Tipo => tipo;
         public int Puntos => puntos;
-        public CantoTruco(TipoTruco tipo){
+        public string Jugador => jugador;
+        public CantoTruco(TipoTruco tipo, string jugador){
             this.tipo = tipo;
+            this.jugador = jugador;
             this.puntos = tipo switch
 
             {

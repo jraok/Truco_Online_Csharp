@@ -3,19 +3,15 @@ using EspacioJugador;
 using EspacioMazo;
 using EspacioEnvido;
 using EspacioFlor;
+using EspacioTruco;
 
 class Program{
     static void Main()
     {
-        List<Carta> maso = new List<Carta>(3);
-        for (int i = 0; i < 3; i++)
-        {
-            maso.Add(new Carta(Palos.Oro,i));
-        }
-        Jugador jugador1 = new Jugador("Jugador1");
-
+        Mazo mazo = new Mazo();
+        Jugador jugador1 = new("Jugador 1");
         // repartir las cartas
-        jugador1.RecibirCartas(maso);
+        jugador1.RecibirCartas(mazo.Repartir(3));
 
         // mostrar la mano de cada jugador
         Console.WriteLine($"{jugador1.Nombre}");
@@ -29,14 +25,14 @@ class Program{
         Console.WriteLine($"Puntos del envido de Jugador1: {jugador1.PuntosEnvido}");
         Console.WriteLine($"Puntos de flor de Jugador1: {jugador1.PuntosFlor}");
         int opc;
-        SecuenciaFlor secuencia = new SecuenciaFlor();
+        SecuenciaTruco secuencia = new SecuenciaTruco();
 
         do
         {
             Console.WriteLine("¿Qué desea hacer?");
-            Console.WriteLine("1. Jugar Flor");
-            Console.WriteLine("2. Jugar ContraFlor");
-            Console.WriteLine("3. Jugar ContraFlorResto");
+            Console.WriteLine("1. Jugar truco");
+            Console.WriteLine("2. Jugar retruco");
+            Console.WriteLine("3. Jugar valeCuatro");
             Console.WriteLine("0. Salir");
             string opcion = Console.ReadLine();
             opc = int.Parse(opcion);
@@ -44,19 +40,19 @@ class Program{
             switch (opc)
             {
                 case 1:
-                    CantoFlor Canto = new CantoFlor(TipoFlor.Flor, jugador1.Nombre);
+                    CantoTruco Canto = new CantoTruco(TipoTruco.Truco, jugador1.Nombre);
                     secuencia.AgregarCanto(Canto);
-                    Console.WriteLine("FLOR!!!");
+                    Console.WriteLine("TRUCO!!!");
                     break;
                 case 2:
-                    CantoFlor Canto1 = new CantoFlor(TipoFlor.ContraFlor, jugador1.Nombre);
+                    CantoTruco Canto1 = new CantoTruco(TipoTruco.Retruco, jugador1.Nombre);
                     secuencia.AgregarCanto(Canto1);
-                    Console.WriteLine("CONTRAFLOR!!!");
+                    Console.WriteLine("RETRUCO!!!");
                     break;
                 case 3:
-                    CantoFlor Canto2 = new CantoFlor(TipoFlor.ContraFlorResto, jugador1.Nombre);
+                    CantoTruco Canto2 = new CantoTruco(TipoTruco.ValeCuatro, jugador1.Nombre);
                     secuencia.AgregarCanto(Canto2);
-                    Console.WriteLine("CONTRA FLOR AL RESTO!!!");
+                    Console.WriteLine("VALE CUATRO!!!");
                     break;
 
                 default:
