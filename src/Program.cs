@@ -1,6 +1,7 @@
 ﻿using EspacioCarta;
 using EspacioJugador;
 using EspacioMazo;
+using EspacioEnvido;
 
 class Program{
     static void Main()
@@ -40,5 +41,46 @@ class Program{
         Console.WriteLine($"Puntos de flor de Jugador1: {jugador1.PuntosFlor}");
         Console.WriteLine($"Puntos de flor de Jugador2: {jugador2.PuntosFlor}");
         
+        int opc = 0;
+        SecuenciaEnvido secuencia = new SecuenciaEnvido();
+        do
+        {
+            Console.WriteLine("¿Qué desea hacer?");
+            Console.WriteLine("1. Jugar Envido");
+            Console.WriteLine("2. Jugar RealEnvido");
+            Console.WriteLine("3. Jugar FaltaEnvido");
+            Console.WriteLine("4. Salir");
+            string opcion = Console.ReadLine();
+            opc = int.Parse(opcion);
+
+            switch (opc)
+            {
+                case 1:
+                    CantoEnvido Canto = new CantoEnvido(TipoEnvido.Envido, jugador1.Nombre, 14);
+                    secuencia.AgregarCanto(Canto);
+                    Console.WriteLine("Envido!!!");
+                    break;
+                case 2:
+                    CantoEnvido Canto1 = new CantoEnvido(TipoEnvido.RealEnvido, jugador1.Nombre, 14);
+                    secuencia.AgregarCanto(Canto1);
+                    Console.WriteLine("RealEnvido!!!");
+                    break;
+                case 3:
+                    CantoEnvido Canto2 = new CantoEnvido(TipoEnvido.FaltaEnvido, jugador1.Nombre, 14);
+                    secuencia.AgregarCanto(Canto2);
+                    Console.WriteLine("FaltaEnvido!!!");
+                    break;
+                
+                default:
+                    Console.WriteLine("Opción inválida");
+                    break;
+            }
+        } while (opc != 0);
+
+        secuencia.CalcularPuntos();
+        Console.WriteLine($"Puntos de la jugada: {secuencia.PuntosJugada}");
+        secuencia.Jugada.ForEach(canto => Console.WriteLine($"{canto.Jugador} ha dicho {canto.Tipo} y ha ganado {canto.Puntos} puntos"));
+
+
     }
 }
