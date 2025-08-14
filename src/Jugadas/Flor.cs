@@ -35,7 +35,7 @@ namespace EspacioFlor {
         }
         public void CalcularPuntos()
         {
-            if (!jugada.Any()) {
+            if (jugada.Count() == 0) {
                 puntosJugada = 0;
                 return;
             }
