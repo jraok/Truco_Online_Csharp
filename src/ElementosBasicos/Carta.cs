@@ -1,5 +1,5 @@
-namespace EspacioCarta
-{
+using System.Text.Json.Serialization;
+namespace EspacioCarta{
     public enum Palos{
         Oro,
         Copa,
@@ -18,6 +18,7 @@ namespace EspacioCarta
         public int Numero => numero;
         public int JerarquiaTruco => jerarquiaTruco;
 
+        [JsonConstructor]
         public Carta(Palos palo, int numero){
             this.palo = palo;
             this.numero = numero;
