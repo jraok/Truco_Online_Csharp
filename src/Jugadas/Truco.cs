@@ -30,18 +30,10 @@ namespace EspacioTruco{
     }
     public class SecuenciaTruco{
         private List<CantoTruco> jugada = new List<CantoTruco>();
-        private int puntosJugada;
         public List<CantoTruco> Jugada => jugada;
-        public int PuntosJugada => puntosJugada;
+        public int PuntosJugada => jugada.Last().Puntos;
         public void AgregarCanto(CantoTruco canto){
             jugada.Add(canto);
-        }
-        public void CalcularPuntos(){
-            if (jugada.Count() == 0) {
-                puntosJugada = 0;
-                return;
-            }
-            puntosJugada = jugada.Last().Puntos;
         }
     }
 }

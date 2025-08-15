@@ -28,25 +28,22 @@ namespace EspacioEnvido{
 
     public class SecuenciaEnvido{
         private List<CantoEnvido> jugada = new List<CantoEnvido>();
-        private int puntosJugada;
         public List<CantoEnvido> Jugada => jugada;
-        public int PuntosJugada => puntosJugada;
+        public int PuntosJugada => CalcularPuntos();
 
         public void AgregarCanto(CantoEnvido canto){
             jugada.Add(canto);
         }
 
-        public void CalcularPuntos(){
+        private int CalcularPuntos(){
+            int puntos = 0;
             if (jugada.Any(canto => canto.Tipo == TipoEnvido.FaltaEnvido))
             {
-                CantoEnvido cantoFalta = jugada.Where(canto => canto.Tipo == TipoEnvido.FaltaEnvido).First();
-                puntosJugada = cantoFalta.Puntos;
-            }else
-            {
-                puntosJugada = jugada.Sum(canto => canto.Puntos);
-
+                puntos = jugada.Where(canto => canto.Tipo == TipoEnvido.FaltaEnvido).First().Puntos;
+            }else{
+                puntos = jugada.Sum(canto => canto.Puntos);
             }
+            return puntos;
         }
-
     }
 }
