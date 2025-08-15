@@ -1,4 +1,5 @@
-namespace EspacioFlor {
+using System.Text.Json.Serialization;
+namespace EspacioFlor{
     public enum TipoFlor{
         Flor,
         ContraFlor,
@@ -12,6 +13,8 @@ namespace EspacioFlor {
         public TipoFlor Tipo => tipo;
         public string Jugador => jugador;
         public int Puntos => puntos;
+
+        [JsonConstructor]
         public CantoFlor(TipoFlor tipo, string jugador){
             this.tipo = tipo;
             this.jugador = jugador;

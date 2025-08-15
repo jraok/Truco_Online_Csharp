@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 namespace EspacioEnvido{
     public enum TipoEnvido{
         Envido,
@@ -11,6 +12,8 @@ namespace EspacioEnvido{
         public TipoEnvido Tipo => tipo;
         public string Jugador => jugador;
         public int Puntos => puntos;
+
+        [JsonConstructor]
         public CantoEnvido(TipoEnvido tipo, string jugador, int puntos){
             this.tipo = tipo;
             this.jugador = jugador;

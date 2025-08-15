@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using EspacioCarta;
 namespace EspacioJugador{
     public class Jugador{
@@ -13,7 +14,7 @@ namespace EspacioJugador{
         public int PuntosEnvido => puntosEnvido;
         public int PuntosFlor => puntosFlor;
 
-
+        [JsonConstructor]
         public Jugador(string nombre){
             this.nombre = nombre;
             puntaje = 0;
