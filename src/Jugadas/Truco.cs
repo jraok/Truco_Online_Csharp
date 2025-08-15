@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 namespace EspacioTruco{
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum TipoTruco{
         Truco,
         Retruco,

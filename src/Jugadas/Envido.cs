@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 namespace EspacioEnvido{
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum TipoEnvido{
         Envido,
         RealEnvido,

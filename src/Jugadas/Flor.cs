@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 namespace EspacioFlor{
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum TipoFlor{
         Flor,
         ContraFlor,
