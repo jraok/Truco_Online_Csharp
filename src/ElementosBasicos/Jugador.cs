@@ -20,12 +20,12 @@ namespace EspacioJugador{
         }
 
         public void RecibirCartas(List<Carta> cartas){
-            if ((mano.Count() + cartas.Count()) <= 3) mano.AddRange(cartas);
+            if ((mano.Count + cartas.Count) <= 3) mano.AddRange(cartas);
             else Console.WriteLine("El jugador ya tiene 3 cartas");
         }
 
-        public Carta JugarCarta(int indice){
-            if(indice >= 0 && indice < mano.Count()){
+        public Carta? JugarCarta(int indice){
+            if(indice >= 0 && indice < mano.Count){
                 var carta = mano[indice];
                 mano.RemoveAt(indice);
                 return carta;
@@ -47,9 +47,9 @@ namespace EspacioJugador{
 
         private int CalcularEnvido(){
             int puntos = 0;
-            for (int i = 0; i < mano.Count(); i++)
+            for (int i = 0; i < mano.Count; i++)
             {
-                for (int j = i+1 ; j < mano.Count(); j++)
+                for (int j = i+1 ; j < mano.Count; j++)
                 {
                     if (mano[i].Palo == mano[j].Palo)
                     {
@@ -63,7 +63,7 @@ namespace EspacioJugador{
         }
         private int CalcularFlor(){
             int puntos = 0;
-            if (mano.Count() == 3 && mano[0].Palo == mano[1].Palo && mano[1].Palo == mano[2].Palo)
+            if (mano.Count == 3 && mano[0].Palo == mano[1].Palo && mano[1].Palo == mano[2].Palo)
             {
                 puntos = mano.Sum(carta => ValorEnvido(carta)) + BonusEnvido;
             }
