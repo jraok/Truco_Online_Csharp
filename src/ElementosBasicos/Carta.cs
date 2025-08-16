@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 namespace EspacioCarta{
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum Palos{
         Oro,
         Copa,
@@ -11,12 +12,10 @@ namespace EspacioCarta{
         private string nombre;
         private Palos palo;
         private int numero;
-        private int jerarquiaTruco;
-
         public string Nombre => nombre;
         public Palos Palo => palo;
         public int Numero => numero;
-        public int JerarquiaTruco => jerarquiaTruco;
+        public int JerarquiaTruco => CalcularJerarquia(palo, numero);
 
         [JsonConstructor]
         public Carta(Palos palo, int numero){
@@ -30,7 +29,6 @@ namespace EspacioCarta{
                 _ => numero.ToString() + " de"
             };
             nombre = $"{NuevoNombre} {palo}";
-            jerarquiaTruco = CalcularJerarquia(palo, numero);
         }
         private int CalcularJerarquia(Palos palo, int numero){
             if (palo == Palos.Espada && numero == 1) return 14;

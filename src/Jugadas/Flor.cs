@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 namespace EspacioFlor{
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum TipoFlor{
         Flor,
         ContraFlor,
@@ -30,20 +31,10 @@ namespace EspacioFlor{
     {
         private List<CantoFlor> jugada = new List<CantoFlor>();
         public List<CantoFlor> Jugada => jugada;
-        private int puntosJugada;
-        public int PuntosJugada => puntosJugada;
+        public int PuntosJugada => jugada.Count == 0 ? 0 : jugada.Last().Puntos;
         public void AgregarCanto(CantoFlor canto)
         {
             jugada.Add(canto);
-        }
-        public void CalcularPuntos()
-        {
-            if (jugada.Count() == 0) {
-                puntosJugada = 0;
-                return;
-            }
-            CantoFlor flor = jugada.Last();
-            puntosJugada = flor.Puntos;
         }
     }
 }
