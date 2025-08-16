@@ -31,7 +31,7 @@ namespace EspacioFlor{
     {
         private List<CantoFlor> jugada = new List<CantoFlor>();
         public List<CantoFlor> Jugada => jugada;
-        public int PuntosJugada => jugada.Last().Puntos;
+        public int PuntosJugada => jugada.Count == 0 ? 0 : jugada.Last().Puntos;
         public void AgregarCanto(CantoFlor canto)
         {
             jugada.Add(canto);
