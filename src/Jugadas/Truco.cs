@@ -20,7 +20,6 @@ namespace EspacioTruco{
             this.tipo = tipo;
             this.jugador = jugador;
             this.puntos = tipo switch
-
             {
                 TipoTruco.Truco => 2,
                 TipoTruco.Retruco => 3,

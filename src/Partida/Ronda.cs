@@ -32,5 +32,14 @@ namespace EspacioRonda{
             puntosJ1 = jugador1;
             puntosJ2 = jugador2;
         }
+        public void AgregarCanto(CantoEnvido envido){
+            secEnvido.AgregarCanto(envido);
+        }
+        public void AgregarCanto(CantoTruco truco){
+            secTruco.AgregarCanto(truco);
+        }
+        public void AgregarCanto(CantoFlor flor){
+            secFlor.AgregarCanto(flor);
+        }
     }
 }

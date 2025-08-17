@@ -40,7 +40,7 @@ namespace EspacioJugador{
             puntaje += puntos;
         }
         
-        private int ValorEnvido(Carta carta){
+        private static int ValorEnvido(Carta carta){
             if (carta.Numero >= 10) return 0;
             else return carta.Numero;
         }
