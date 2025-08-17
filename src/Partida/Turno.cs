@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using EspacioJugador;
 using EspacioCarta;
 
 namespace EspacioTurno
