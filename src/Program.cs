@@ -30,7 +30,7 @@ class Program{
             Ronda.AgregarTurno(new Turno(Player1.Nombre,Player1.JugarCarta(0)));
             Ronda.AgregarTurno(new Turno(Player2.Nombre,Player2.JugarCarta(0)));
             Rondas.Add(Ronda);
-            Console.WriteLine($"Ganador de la ronda: {i+1} ---> jugador = {Ronda.DeterminarGanador().ToString()}");
+            Console.WriteLine($"Ganador de la ronda: {i+1} ---> jugador = {Ronda.GanadorRonda.ToString()}");
         }
        
 
