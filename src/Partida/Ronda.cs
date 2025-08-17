@@ -1,25 +1,18 @@
 using System.Text.Json.Serialization;
-using EspacioEnvido;
-using EspacioTruco;
-using EspacioFlor;
 using EspacioTurno;
 
 namespace EspacioRonda{
+    [JsonConverter(typeof(JsonStringEnumConverter))]
+    public enum Ganador {
+        Mano,
+        Pie,
+        Empate
+    }
     public class Ronda{
         private int numero;
-        private int puntosJ1;
-        private int puntosJ2;
-        private SecuenciaEnvido secEnvido = new();
-        private SecuenciaFlor secFlor = new();
-        private SecuenciaTruco secTruco = new();
         private List<Turno> turnos = new();
 
         public int Numero => numero;
-        public int PuntosJ1 => puntosJ1;
-        public int PuntosJ2 => puntosJ2;
-        public SecuenciaEnvido SecEnvido => secEnvido;
-        public SecuenciaFlor SecFlor => secFlor;
-        public SecuenciaTruco SecTruco => secTruco;
         public List<Turno> Turnos => turnos;
         [JsonConstructor]
         public Ronda(int numero){
@@ -28,18 +21,17 @@ namespace EspacioRonda{
         public void AgregarTurno(Turno turno){
             turnos.Add(turno);
         }
-        public void AsignarPuntos(int jugador1, int jugador2){
-            puntosJ1 = jugador1;
-            puntosJ2 = jugador2;
-        }
-        public void AgregarCanto(CantoEnvido envido){
-            secEnvido.AgregarCanto(envido);
-        }
-        public void AgregarCanto(CantoTruco truco){
-            secTruco.AgregarCanto(truco);
-        }
-        public void AgregarCanto(CantoFlor flor){
-            secFlor.AgregarCanto(flor);
+        public Ganador DeterminarGanador(){
+            var carta1 = turnos[0].CartaJugada;
+            var carta2 = turnos[1].CartaJugada;
+            if (carta1.JerarquiaTruco > carta2.JerarquiaTruco)
+            {
+                return Ganador.Mano;
+            }else if(carta1.JerarquiaTruco < carta2.JerarquiaTruco){
+                return Ganador.Pie;
+            }else{
+                return Ganador.Empate;
+            }
         }
     }
 }
