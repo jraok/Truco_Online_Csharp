@@ -14,6 +14,7 @@ namespace EspacioRonda{
 
         public int Numero => numero;
         public List<Turno> Turnos => turnos;
+        public Ganador GanadorRonda => DeterminarGanador();
         [JsonConstructor]
         public Ronda(int numero){
             this.numero = numero;
@@ -21,7 +22,7 @@ namespace EspacioRonda{
         public void AgregarTurno(Turno turno){
             turnos.Add(turno);
         }
-        public Ganador DeterminarGanador(){
+        private Ganador DeterminarGanador(){
             var carta1 = turnos[0].CartaJugada;
             var carta2 = turnos[1].CartaJugada;
             if (carta1.JerarquiaTruco > carta2.JerarquiaTruco)
