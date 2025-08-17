@@ -33,14 +33,5 @@ namespace EspacioRonda{
                 return Ganador.Empate;
             }
         }
-        public void AgregarCanto(CantoEnvido envido){
-            secEnvido.AgregarCanto(envido);
-        }
-        public void AgregarCanto(CantoTruco truco){
-            secTruco.AgregarCanto(truco);
-        }
-        public void AgregarCanto(CantoFlor flor){
-            secFlor.AgregarCanto(flor);
-        }
     }
 }
