@@ -7,7 +7,6 @@ namespace EspacioFlor{
         ContraFlorResto,
     }
     public class CantoFlor{
-        public const int PuntosPartida = 30;
         private TipoFlor tipo;
         private string jugador;
         private int puntos;
@@ -16,25 +15,15 @@ namespace EspacioFlor{
         public int Puntos => puntos;
 
         [JsonConstructor]
-        public CantoFlor(TipoFlor tipo, string jugador){
+        public CantoFlor(TipoFlor tipo, string jugador, int Puntos){
             this.tipo = tipo;
             this.jugador = jugador;
             this.puntos = tipo switch{
                 TipoFlor.Flor => 3,
                 TipoFlor.ContraFlor => 6,
-                TipoFlor.ContraFlorResto => PuntosPartida,
+                TipoFlor.ContraFlorResto => Puntos,
                 _ => 0,
             };
-        }
-    }
-    public class SecuenciaFlor
-    {
-        private List<CantoFlor> jugada = new List<CantoFlor>();
-        public List<CantoFlor> Jugada => jugada;
-        public int PuntosJugada => jugada.Count == 0 ? 0 : jugada.Last().Puntos;
-        public void AgregarCanto(CantoFlor canto)
-        {
-            jugada.Add(canto);
         }
     }
 }

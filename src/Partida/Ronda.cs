@@ -11,7 +11,6 @@ namespace EspacioRonda{
     public class Ronda{
         private int numero;
         private List<Turno> turnos = new();
-
         public int Numero => numero;
         public List<Turno> Turnos => turnos;
         public Ganador GanadorRonda => DeterminarGanador();
