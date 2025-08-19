@@ -5,7 +5,7 @@ namespace EspacioJugador{
         private const int BonusEnvido = 20;
         private string nombre;
         private int puntaje;
-        private List<Carta> cartas;
+        private List<Carta> cartas = new();
         public string Nombre => nombre;
         public int Puntaje => puntaje;
         public List<Carta> Cartas => cartas;
@@ -20,7 +20,7 @@ namespace EspacioJugador{
         }
 
         public void RecibirCartas(List<Carta> cartas){
-            if ((cartas.Count + cartas.Count) <= 3) cartas.AddRange(cartas);
+            if ((this.cartas.Count + cartas.Count) <= 3) this.cartas.AddRange(cartas);
             else Console.WriteLine("El jugador ya tiene 3 cartas");
         }
 
