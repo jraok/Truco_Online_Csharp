@@ -7,21 +7,21 @@ using EspacioJugador;
 
 namespace EspacioMano{
     public class Mano{
-        private const int Puntos = 30;
+        private const int PuntosPartida = 30;
         private List<Ronda> rondas = new();
         private List<CantoEnvido> secuenciaEnvido = new();
         private List<CantoTruco> secuenciaTruco = new();
         private List<CantoFlor> secuenciaFlor = new();
         private Jugador jugador1;
         private Jugador jugador2;
-        public List<Ronda> Rondas => rondas;
+        public IReadOnlyList<Ronda> Rondas => rondas.AsReadOnly();
         public List<CantoEnvido> SecuenciaEnvido => secuenciaEnvido;
         public List<CantoTruco> SecuenciaTruco => secuenciaTruco;
         public List<CantoFlor> SecuenciaFlor => secuenciaFlor;
         public int PuntosEnvido => ClrPuntosEnvido();
         public int PuntosTruco => ClrPuntosTruco();
         public int PuntosFlor => ClrPuntosFlor();
-        private int PuntosPartida => CalcularResto();
+        private int PuntosResto => CalcularResto();
         [JsonConstructor]
         public Mano(Jugador jugadorMano, Jugador jugadorPie){
             this.jugador1 = jugadorMano;
@@ -31,26 +31,26 @@ namespace EspacioMano{
             rondas.Add(ronda);
         }
         public void AgregarCanto(TipoEnvido envido, string jugador){
-            secuenciaEnvido.Add(new CantoEnvido(envido,jugador,PuntosPartida));
+            secuenciaEnvido.Add(new CantoEnvido(envido,jugador,PuntosResto));
         }
         public void AgregarCanto(TipoTruco truco, string jugador){
             secuenciaTruco.Add(new CantoTruco(truco,jugador));
         }
         public void AgregarCanto(TipoFlor flor,string jugador){
-            secuenciaFlor.Add(new CantoFlor(flor,jugador,Puntos));
+            secuenciaFlor.Add(new CantoFlor(flor,jugador,PuntosPartida));
         }
         private int CalcularResto(){
             if (jugador1.Puntaje > jugador2.Puntaje)
             {
-                return (Puntos - jugador1.Puntaje);
+                return (PuntosPartida - jugador1.Puntaje);
             }else{
-                return (Puntos - jugador2.Puntaje);
+                return (PuntosPartida - jugador2.Puntaje);
             }
         }
         private int ClrPuntosEnvido(){
             if (secuenciaEnvido.Any(canto => canto.Tipo == TipoEnvido.FaltaEnvido))
             {
-                return PuntosPartida;
+                return PuntosResto;
             }else{
                 return secuenciaEnvido.Sum(canto => canto.Puntos);
             }
