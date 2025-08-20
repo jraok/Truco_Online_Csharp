@@ -9,10 +9,15 @@ namespace EspacioCarta{
     }
     public class Carta
     {
-        private string nombre;
         private Palos palo;
         private int numero;
-        public string Nombre => nombre;
+        public string Nombre => numero switch
+            {
+              10 => $"Sota de {palo}",
+              11 => $"Caballo de {palo}",
+              12 => $"Rey de {palo}",
+              _  => $"{numero} de {palo}"
+        };
         public Palos Palo => palo;
         public int Numero => numero;
         public int JerarquiaTruco => CalcularJerarquia(palo, numero);
@@ -21,14 +26,6 @@ namespace EspacioCarta{
         public Carta(Palos palo, int numero){
             this.palo = palo;
             this.numero = numero;
-            string NuevoNombre = numero switch
-            {
-                10 => "Sota de",
-                11 => "Caballo de",
-                12 => "Rey de",
-                _ => numero.ToString() + " de"
-            };
-            nombre = $"{NuevoNombre} {palo}";
         }
         private int CalcularJerarquia(Palos palo, int numero){
             if (palo == Palos.Espada && numero == 1) return 14;

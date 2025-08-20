@@ -8,7 +8,7 @@ namespace EspacioJugador{
         private List<Carta> cartas = new();
         public string Nombre => nombre;
         public int Puntaje => puntaje;
-        public List<Carta> Cartas => cartas;
+        public IReadOnlyList<Carta> Cartas => cartas.AsReadOnly();
         public int PuntosEnvido => CalcularEnvido();
         public int PuntosFlor => CalcularFlor();
 
@@ -62,12 +62,9 @@ namespace EspacioJugador{
             return puntos;
         }
         private int CalcularFlor(){
-            int puntos = 0;
-            if (cartas.Count == 3 && cartas[0].Palo == cartas[1].Palo && cartas[1].Palo == cartas[2].Palo)
-            {
-                puntos = cartas.Sum(carta => ValorEnvido(carta)) + BonusEnvido;
-            }
-            return puntos;
+            if (cartas[0].Palo == cartas[1].Palo && cartas[1].Palo == cartas[2].Palo)
+            return (cartas.Sum(carta => ValorEnvido(carta)) + BonusEnvido);
+            else return 0;
         }
     }
 }
