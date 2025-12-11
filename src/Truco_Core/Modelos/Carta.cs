@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
-namespace EspacioCarta{
+namespace Truco.Core.Modelos
+{
     [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum Palos{
         Oro,

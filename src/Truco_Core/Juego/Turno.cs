@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
-using EspacioCarta;
+using Truco.Core.Modelos;
 
-namespace EspacioTurno
+namespace Truco.Core.Juego
 {
     public class Turno{
         private string jugador;

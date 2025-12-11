@@ -1,5 +1,4 @@
-using EspacioCarta;
-namespace EspacioMazo
+namespace Truco.Core.Modelos
 {
     public class Mazo{
         private static readonly Random rnd = new Random();

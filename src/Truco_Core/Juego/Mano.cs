@@ -1,11 +1,8 @@
 using System.Text.Json.Serialization;
-using EspacioRonda;
-using EspacioEnvido;
-using EspacioTruco;
-using EspacioFlor;
-using EspacioJugador;
-
-namespace EspacioMano{
+using Truco.Core.Modelos;
+using Truco.Core.Reglas;
+namespace Truco.Core.Juego
+{
     public class Mano{
         private const int PuntosPartida = 30;
         private List<Ronda> rondas = new();

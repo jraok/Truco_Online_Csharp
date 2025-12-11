@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
-using EspacioCarta;
-namespace EspacioJugador{
+namespace Truco.Core.Modelos
+{
     public class Jugador{
         private const int BonusEnvido = 20;
         private string nombre;

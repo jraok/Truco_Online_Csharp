@@ -1,7 +1,6 @@
 using System.Text.Json.Serialization;
-using EspacioTurno;
-
-namespace EspacioRonda{
+namespace Truco.Core.Juego
+{
     [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum Ganador {
         Mano,
