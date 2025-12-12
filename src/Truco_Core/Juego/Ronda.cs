@@ -1,4 +1,4 @@
-
+using Truco.Core.Reglas;
 namespace Truco.Core.Juego
 {
     public enum Ganador {
@@ -22,14 +22,13 @@ namespace Truco.Core.Juego
         private Ganador DeterminarGanador(){
             var carta1 = turnos[0].CartaJugada;
             var carta2 = turnos[1].CartaJugada;
-            if (carta1.JerarquiaTruco > carta2.JerarquiaTruco)
+            return CalculadoraTruco.CompararCartas(carta1, carta2) switch
             {
-                return Ganador.Mano;
-            }else if(carta1.JerarquiaTruco < carta2.JerarquiaTruco){
-                return Ganador.Pie;
-            }else{
-                return Ganador.Empate;
-            }
+                1 => Ganador.Mano,
+                -1 => Ganador.Pie,
+                _ => Ganador.Empate,
+            };
         }
+
     }
 }

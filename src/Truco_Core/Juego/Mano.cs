@@ -10,6 +10,7 @@ namespace Truco.Core.Juego
         private List<CantoFlor> secuenciaFlor = new();
         private Jugador jugador1;
         private Jugador jugador2;
+        
         public IReadOnlyList<Ronda> Rondas => rondas.AsReadOnly();
         public List<CantoEnvido> SecuenciaEnvido => secuenciaEnvido;
         public List<CantoTruco> SecuenciaTruco => secuenciaTruco;
