@@ -1,7 +1,7 @@
 namespace Truco.Core.Modelos
 {
     public class Mazo{
-        private static readonly Random rnd = new Random();
+        private readonly Random rnd = new Random();
         public List<Carta> Naipes { get; private set; } = new List<Carta>();
 
         public Mazo(){
@@ -16,8 +16,15 @@ namespace Truco.Core.Modelos
                 }
             }
         }
-        public void Barajar(){
-            Naipes = Naipes.OrderBy(x => rnd.Next()).ToList();
+        public void Barajar()
+        {
+            int n = Naipes.Count;
+            while (n > 1)
+            {
+                n--;
+                int k = rnd.Next(n + 1);
+                (Naipes[n], Naipes[k]) = (Naipes[k], Naipes[n]);
+            }
         }
 
         public List<Carta> Repartir(int cantidad){
