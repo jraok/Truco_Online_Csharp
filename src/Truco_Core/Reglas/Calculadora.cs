@@ -1,7 +1,7 @@
 using Truco.Core.Modelos;
 namespace Truco.Core.Reglas
 {
-    public static class Calculadora{
+    public static class CalculadoraTruco{
         private const int BonusEnvido = 20;
         private static int ValorEnvido(Carta carta){
             if (carta.Numero >= 10) return 0;
@@ -27,6 +27,26 @@ namespace Truco.Core.Reglas
             if (cartas[0].Palo == cartas[1].Palo && cartas[1].Palo == cartas[2].Palo)
             return (cartas.Sum(carta => ValorEnvido(carta)) + BonusEnvido);
             else return 0;
+        }
+        private static int JerarquiaCarta(Carta carta){
+            if (carta.Palo == Palos.Espada && carta.Numero == 1) return 14;
+            if (carta.Palo == Palos.Basto && carta.Numero == 1) return 13;
+            if (carta.Palo == Palos.Espada && carta.Numero == 7) return 12;
+            if (carta.Palo == Palos.Oro && carta.Numero == 7) return 11;
+            return carta.Numero switch
+            {
+                3 => 10,
+                2 => 9,
+                1 => 8,
+                12 => 7,
+                11 => 6,
+                10 => 5,
+                7 => 4,
+                6 => 3,
+                5 => 2,
+                4 => 1,
+                _ => 0
+            };
         }
     }
 }
