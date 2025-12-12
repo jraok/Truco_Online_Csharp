@@ -1,7 +1,6 @@
-using System.Text.Json.Serialization;
+
 namespace Truco.Core.Juego
 {
-    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum Ganador {
         Mano,
         Pie,
@@ -13,7 +12,7 @@ namespace Truco.Core.Juego
         public int Numero => numero;
         public List<Turno> Turnos => turnos;
         public Ganador GanadorRonda => DeterminarGanador();
-        [JsonConstructor]
+        
         public Ronda(int numero){
             this.numero = numero;
         }

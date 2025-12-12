@@ -1,4 +1,3 @@
-using System.Text.Json.Serialization;
 namespace Truco.Core.Modelos
 {
     public class Jugador{
@@ -6,13 +5,13 @@ namespace Truco.Core.Modelos
         private string nombre;
         private int puntaje;
         private List<Carta> cartas = new();
+        
         public string Nombre => nombre;
         public int Puntaje => puntaje;
         public IReadOnlyList<Carta> Cartas => cartas.AsReadOnly();
         public int PuntosEnvido => CalcularEnvido();
         public int PuntosFlor => CalcularFlor();
 
-        [JsonConstructor]
         public Jugador(string nombre){
             this.nombre = nombre;
             puntaje = 0;
@@ -20,20 +19,19 @@ namespace Truco.Core.Modelos
         }
 
         public void RecibirCartas(List<Carta> cartas){
-            if ((this.cartas.Count + cartas.Count) <= 3) this.cartas.AddRange(cartas);
-            else Console.WriteLine("El jugador ya tiene 3 cartas");
+            if (this.cartas.Count + cartas.Count > 3){
+                throw new InvalidOperationException($"El jugador {nombre} no puede recibir más cartas");
+            };
+            this.cartas.AddRange(cartas);
         }
 
         public Carta? JugarCarta(int indice){
-            if(indice >= 0 && indice < cartas.Count){
-                var carta = cartas[indice];
-                cartas.RemoveAt(indice);
-                return carta;
+            if(indice < 0 || indice >= cartas.Count){
+                throw new ArgumentOutOfRangeException(nameof(indice),"El índice no existe");
             }
-            else{
-                Console.WriteLine("Indice incorrecto");
-                return null;
-            }
+            var carta = cartas[indice];
+            cartas.RemoveAt(indice);
+            return carta;
         }
 
         public void SumarPuntos(int puntos){

@@ -1,7 +1,5 @@
-using System.Text.Json.Serialization;
 namespace Truco.Core.Reglas
 {
-    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum TipoTruco{
         Truco,
         Retruco,
@@ -16,7 +14,6 @@ namespace Truco.Core.Reglas
         public int Puntos => puntos;
         public string Jugador => jugador;
         
-        [JsonConstructor]
         public CantoTruco(TipoTruco tipo, string jugador){
             this.tipo = tipo;
             this.jugador = jugador;

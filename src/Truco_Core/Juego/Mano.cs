@@ -1,4 +1,3 @@
-using System.Text.Json.Serialization;
 using Truco.Core.Modelos;
 using Truco.Core.Reglas;
 namespace Truco.Core.Juego
@@ -19,7 +18,7 @@ namespace Truco.Core.Juego
         public int PuntosTruco => ClrPuntosTruco();
         public int PuntosFlor => ClrPuntosFlor();
         private int PuntosResto => CalcularResto();
-        [JsonConstructor]
+        
         public Mano(Jugador jugadorMano, Jugador jugadorPie){
             this.jugador1 = jugadorMano;
             this.jugador2 = jugadorPie;

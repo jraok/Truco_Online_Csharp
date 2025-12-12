@@ -1,7 +1,5 @@
-using System.Text.Json.Serialization;
 namespace Truco.Core.Modelos
 {
-    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum Palos{
         Oro,
         Copa,
@@ -23,7 +21,6 @@ namespace Truco.Core.Modelos
         public int Numero => numero;
         public int JerarquiaTruco => CalcularJerarquia(palo, numero);
 
-        [JsonConstructor]
         public Carta(Palos palo, int numero){
             this.palo = palo;
             this.numero = numero;

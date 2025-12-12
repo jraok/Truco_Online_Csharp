@@ -1,6 +1,4 @@
-using System.Text.Json.Serialization;
 using Truco.Core.Modelos;
-
 namespace Truco.Core.Juego
 {
     public class Turno{
@@ -8,7 +6,6 @@ namespace Truco.Core.Juego
         private Carta cartaJugada;
         public string Jugador => jugador;
         public Carta CartaJugada => cartaJugada;
-        [JsonConstructor]
         public Turno(string jugador, Carta carta){
             this.jugador = jugador;
             this.cartaJugada = carta;
