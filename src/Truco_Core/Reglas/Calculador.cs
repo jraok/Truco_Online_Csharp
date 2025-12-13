@@ -93,7 +93,7 @@ namespace Truco.Core.Reglas
                 _ => 0,
             };
         }
-        private static int CalcularResto(Jugador J1, Jugador J2){
+        public static int CalcularResto(Jugador J1, Jugador J2){
             if (J1.Puntaje > J2.Puntaje)
             {
                 return (PuntosPartida - J1.Puntaje);
