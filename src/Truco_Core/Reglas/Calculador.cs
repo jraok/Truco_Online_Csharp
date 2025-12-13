@@ -1,9 +1,9 @@
-using System.Data;
 using Truco.Core.Modelos;
 namespace Truco.Core.Reglas
 {
-    public static class CalculadoraTruco{
+    public static class CalculadorTruco{
         private const int BonusEnvido = 20;
+        private const int PuntosPartida = 30;
         private static int ValorEnvido(Carta carta){
             if (carta.Numero >= 10) return 0;
             else return carta.Numero;

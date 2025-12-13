@@ -13,7 +13,7 @@ namespace Truco.Core.Reglas
         public TipoEnvido Tipo => tipo;
         public string Jugador => jugador;
 
-        public CantoEnvido(TipoEnvido tipo, string jugador, int puntos)
+        public CantoEnvido(TipoEnvido tipo, string jugador)
         {
             this.tipo = tipo;
             this.jugador = jugador;

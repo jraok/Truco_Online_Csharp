@@ -22,7 +22,7 @@ namespace Truco.Core.Juego
         private Ganador DeterminarGanador(){
             var carta1 = turnos[0].CartaJugada;
             var carta2 = turnos[1].CartaJugada;
-            return CalculadoraTruco.CompararCartas(carta1, carta2) switch
+            return CalculadorTruco.CompararCartas(carta1, carta2) switch
             {
                 1 => Ganador.Mano,
                 -1 => Ganador.Pie,

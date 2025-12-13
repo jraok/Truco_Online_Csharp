@@ -23,7 +23,7 @@ namespace Truco.Core.Juego
             rondas.Add(ronda);
         }
         public void AgregarCanto(TipoEnvido envido, string jugador){
-            secuenciaEnvido.Add(new CantoEnvido(envido,jugador,PuntosResto));
+            secuenciaEnvido.Add(new CantoEnvido(envido,jugador));
         }
         public void AgregarCanto(TipoTruco truco, string jugador){
             secuenciaTruco.Add(new CantoTruco(truco,jugador));
@@ -31,28 +31,5 @@ namespace Truco.Core.Juego
         public void AgregarCanto(TipoFlor flor,string jugador){
             secuenciaFlor.Add(new CantoFlor(flor,jugador));
         }
-        private int CalcularResto(){
-            if (jugador1.Puntaje > jugador2.Puntaje)
-            {
-                return (PuntosPartida - jugador1.Puntaje);
-            }else{
-                return (PuntosPartida - jugador2.Puntaje);
-            }
-        }
-        private int ClrPuntosEnvido(){
-            if (secuenciaEnvido.Any(canto => canto.Tipo == TipoEnvido.FaltaEnvido))
-            {
-                return PuntosResto;
-            }else{
-                return secuenciaEnvido.Sum(canto => canto.Puntos);
-            }
-        }
-        private int ClrPuntosTruco(){
-            return secuenciaTruco.Count > 0 ? secuenciaTruco.Last().Puntos : 0;
-        }
-        private int ClrPuntosFlor(){
-            return secuenciaFlor.Count > 0 ? secuenciaFlor.Last().Puntos : 0;
-        }
-
     }
 }
