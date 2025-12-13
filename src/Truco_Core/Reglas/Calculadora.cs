@@ -1,3 +1,4 @@
+using System.Data;
 using Truco.Core.Modelos;
 namespace Truco.Core.Reglas
 {
@@ -8,6 +9,10 @@ namespace Truco.Core.Reglas
             else return carta.Numero;
         }
         public static int CalcularEnvido(IReadOnlyList<Carta> cartas){
+            if (cartas.Count != 3)
+            {
+                throw new InvalidOperationException("El envido solo se calcula con 3 cartas");
+            }
             int puntos = 0;
             for (int i = 0; i < cartas.Count; i++)
             {
@@ -48,7 +53,6 @@ namespace Truco.Core.Reglas
                 _ => 0
             };
         }
-
         public static int CompararCartas(Carta c1, Carta c2){
             if (JerarquiaCarta(c1) > JerarquiaCarta(c2))
             {

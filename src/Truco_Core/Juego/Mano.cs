@@ -3,7 +3,6 @@ using Truco.Core.Reglas;
 namespace Truco.Core.Juego
 {
     public class Mano{
-        private const int PuntosPartida = 30;
         private List<Ronda> rondas = new();
         private List<CantoEnvido> secuenciaEnvido = new();
         private List<CantoTruco> secuenciaTruco = new();
@@ -15,10 +14,6 @@ namespace Truco.Core.Juego
         public List<CantoEnvido> SecuenciaEnvido => secuenciaEnvido;
         public List<CantoTruco> SecuenciaTruco => secuenciaTruco;
         public List<CantoFlor> SecuenciaFlor => secuenciaFlor;
-        public int PuntosEnvido => ClrPuntosEnvido();
-        public int PuntosTruco => ClrPuntosTruco();
-        public int PuntosFlor => ClrPuntosFlor();
-        private int PuntosResto => CalcularResto();
         
         public Mano(Jugador jugadorMano, Jugador jugadorPie){
             this.jugador1 = jugadorMano;
@@ -34,7 +29,7 @@ namespace Truco.Core.Juego
             secuenciaTruco.Add(new CantoTruco(truco,jugador));
         }
         public void AgregarCanto(TipoFlor flor,string jugador){
-            secuenciaFlor.Add(new CantoFlor(flor,jugador,PuntosPartida));
+            secuenciaFlor.Add(new CantoFlor(flor,jugador));
         }
         private int CalcularResto(){
             if (jugador1.Puntaje > jugador2.Puntaje)
