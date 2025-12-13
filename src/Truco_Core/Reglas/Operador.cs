@@ -1,7 +1,8 @@
 using Truco.Core.Modelos;
 namespace Truco.Core.Reglas
 {
-    public static class CalculadorTruco{
+    public static class Operador
+    {
         private const int BonusEnvido = 20;
         private const int PuntosPartida = 30;
         public static int CompararCartas(Carta c1, Carta c2){
