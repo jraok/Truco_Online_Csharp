@@ -6,23 +6,14 @@ namespace Truco.Core.Modelos
         Espada,
         Basto
     }
-    public class Carta
+    public record Carta(Palos Palo, int Numero)
     {
-        private Palos palo;
-        private int numero;
-        public string Nombre => numero switch
+        public string Nombre => Numero switch
             {
-            10 => $"Sota de {palo}",
-            11 => $"Caballo de {palo}",
-            12 => $"Rey de {palo}",
-            _  => $"{numero} de {palo}"
+            10 => $"Sota de {Palo}",
+            11 => $"Caballo de {Palo}",
+            12 => $"Rey de {Palo}",
+            _  => $"{Numero} de {Palo}"
         };
-        public Palos Palo => palo;
-        public int Numero => numero;
-
-        public Carta(Palos palo, int numero){
-            this.palo = palo;
-            this.numero = numero;
-        }
     }
 }

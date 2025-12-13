@@ -22,7 +22,7 @@ namespace Truco.Core.Modelos
             this.cartas.AddRange(cartas);
         }
 
-        public Carta? JugarCarta(int indice){
+        public Carta JugarCarta(int indice){
             if(indice < 0 || indice >= cartas.Count){
                 throw new ArgumentOutOfRangeException(nameof(indice),"El índice no existe");
             }
