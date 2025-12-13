@@ -63,5 +63,43 @@ namespace Truco.Core.Reglas
                 return 0;
             }
         }
+        public static int SumaDeEnvido(List<CantoEnvido> cantos, int resto){
+            if (!cantos.Any()) return 0; 
+            if (cantos.Last().Tipo == TipoEnvido.FaltaEnvido) return resto;
+            return cantos.Sum(c => c.Tipo switch
+            {
+                TipoEnvido.Envido => 2,
+                TipoEnvido.RealEnvido => 3,
+                _ => 0,
+            });
+        }
+        public static int SumaDeTruco(List<CantoTruco> cantos){
+            if (!cantos.Any()) return 1;
+            return cantos.Last().Tipo switch
+            {
+                TipoTruco.Truco => 2,
+                TipoTruco.Retruco => 3,
+                TipoTruco.ValeCuatro => 4,
+                _ => 1,
+            };
+        }
+        public static int SumaDeFlor(List<CantoFlor> cantos, int resto){
+            if (!cantos.Any()) return 0;
+            return cantos.Last().Tipo switch
+            {
+                TipoFlor.Flor => 3,
+                TipoFlor.ContraFlor => 6,
+                TipoFlor.ContraFlorResto => resto,
+                _ => 0,
+            };
+        }
+        private static int CalcularResto(Jugador J1, Jugador J2){
+            if (J1.Puntaje > J2.Puntaje)
+            {
+                return (PuntosPartida - J1.Puntaje);
+            }else{
+                return (PuntosPartida - J2.Puntaje);
+            }
+        }
     }
 }
