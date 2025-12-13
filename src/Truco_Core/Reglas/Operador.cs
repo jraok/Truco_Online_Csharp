@@ -4,7 +4,6 @@ namespace Truco.Core.Reglas
     public static class Operador
     {
         private const int BonusEnvido = 20;
-        private const int PuntosPartida = 30;
         public static int CompararCartas(Carta c1, Carta c2){
             if (JerarquiaCarta(c1) > JerarquiaCarta(c2))
             {
@@ -35,7 +34,7 @@ namespace Truco.Core.Reglas
                 _ => 0
             };
         }
-        public static int CalcularResto(Jugador J1, Jugador J2){
+        public static int CalcularResto(Jugador J1, Jugador J2, int PuntosPartida){
             if (J1.Puntaje > J2.Puntaje)
             {
                 return (PuntosPartida - J1.Puntaje);

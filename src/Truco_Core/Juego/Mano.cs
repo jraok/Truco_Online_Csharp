@@ -18,7 +18,6 @@ namespace Truco.Core.Juego
         public Mano(Jugador jugadorMano, Jugador jugadorPie){
             this.jugadorMano = jugadorMano;
             this.jugadorPie = jugadorPie;
-            IniciarSiguienteRonda();
         }
         public void IniciarSiguienteRonda(){
             if (rondas.Count >= 3) throw new InvalidOperationException("Una mano de truco solo tiene 3 rondas");
