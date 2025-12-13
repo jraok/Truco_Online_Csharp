@@ -4,34 +4,15 @@ namespace Truco.Core.Reglas
     public static class CalculadorTruco{
         private const int BonusEnvido = 20;
         private const int PuntosPartida = 30;
-        private static int ValorEnvido(Carta carta){
-            if (carta.Numero >= 10) return 0;
-            else return carta.Numero;
-        }
-        public static int CalcularEnvido(IReadOnlyList<Carta> cartas){
-            if (cartas.Count != 3)
+        public static int CompararCartas(Carta c1, Carta c2){
+            if (JerarquiaCarta(c1) > JerarquiaCarta(c2))
             {
-                throw new InvalidOperationException("El envido solo se calcula con 3 cartas");
+                return 1;
+            }else if(JerarquiaCarta(c1) < JerarquiaCarta(c2)){
+                return -1;
+            }else{
+                return 0;
             }
-            int puntos = 0;
-            for (int i = 0; i < cartas.Count; i++)
-            {
-                for (int j = i+1 ; j < cartas.Count; j++)
-                {
-                    if (cartas[i].Palo == cartas[j].Palo)
-                    {
-                        int suma = ValorEnvido(cartas[i]) + ValorEnvido(cartas[j]) + BonusEnvido;
-                        if (suma > puntos) puntos = suma;
-                    }
-                }
-            }
-            if (puntos == 0) puntos = cartas.Max(carta => ValorEnvido(carta));
-            return puntos;
-        }
-        public static int CalcularFlor(IReadOnlyList<Carta> cartas){
-            if (cartas[0].Palo == cartas[1].Palo && cartas[1].Palo == cartas[2].Palo)
-            return (cartas.Sum(carta => ValorEnvido(carta)) + BonusEnvido);
-            else return 0;
         }
         public static int JerarquiaCarta(Carta carta){
             if (carta.Palo == Palos.Espada && carta.Numero == 1) return 14;
@@ -53,15 +34,39 @@ namespace Truco.Core.Reglas
                 _ => 0
             };
         }
-        public static int CompararCartas(Carta c1, Carta c2){
-            if (JerarquiaCarta(c1) > JerarquiaCarta(c2))
+        public static int CalcularResto(Jugador J1, Jugador J2){
+            if (J1.Puntaje > J2.Puntaje)
             {
-                return 1;
-            }else if(JerarquiaCarta(c1) < JerarquiaCarta(c2)){
-                return -1;
+                return (PuntosPartida - J1.Puntaje);
             }else{
-                return 0;
+                return (PuntosPartida - J2.Puntaje);
             }
+        }
+        public static int CalcularEnvido(IReadOnlyList<Carta> cartas){
+            if (cartas.Count != 3)
+            {
+                throw new InvalidOperationException("El envido solo se calcula con 3 cartas");
+            }
+            int puntos = 0;
+            for (int i = 0; i < cartas.Count; i++)
+            {
+                for (int j = i+1 ; j < cartas.Count; j++)
+                {
+                    if (cartas[i].Palo == cartas[j].Palo)
+                    {
+                        int Valor = cartas[i].Numero >= 10 ? 0 : cartas[i].Numero;
+                        int suma = Valor + cartas[j].Numero + BonusEnvido;
+                        if (suma > puntos) puntos = suma;
+                    }
+                }
+            }
+            if (puntos == 0) puntos = cartas.Max(c => c.Numero >= 10 ? 0 : c.Numero);
+            return puntos;
+        }
+        public static int CalcularFlor(IReadOnlyList<Carta> cartas){
+            if (cartas[0].Palo == cartas[1].Palo && cartas[1].Palo == cartas[2].Palo)
+            return (cartas.Sum(c => c.Numero >= 10 ? 0 : c.Numero) + BonusEnvido);
+            else return 0;
         }
         public static int SumaDeEnvido(List<CantoEnvido> cantos, int resto){
             if (!cantos.Any()) return 0; 
@@ -92,14 +97,6 @@ namespace Truco.Core.Reglas
                 TipoFlor.ContraFlorResto => resto,
                 _ => 0,
             };
-        }
-        public static int CalcularResto(Jugador J1, Jugador J2){
-            if (J1.Puntaje > J2.Puntaje)
-            {
-                return (PuntosPartida - J1.Puntaje);
-            }else{
-                return (PuntosPartida - J2.Puntaje);
-            }
         }
     }
 }
