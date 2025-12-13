@@ -7,17 +7,22 @@ namespace Truco.Core.Juego
         private List<CantoEnvido> secuenciaEnvido = new();
         private List<CantoTruco> secuenciaTruco = new();
         private List<CantoFlor> secuenciaFlor = new();
-        private Jugador jugador1;
-        private Jugador jugador2;
+        private Jugador jugadorMano;
+        private Jugador jugadorPie;
         
         public IReadOnlyList<Ronda> Rondas => rondas.AsReadOnly();
         public List<CantoEnvido> SecuenciaEnvido => secuenciaEnvido;
         public List<CantoTruco> SecuenciaTruco => secuenciaTruco;
         public List<CantoFlor> SecuenciaFlor => secuenciaFlor;
-        
+        public Ronda? RondaActual => rondas.LastOrDefault();
         public Mano(Jugador jugadorMano, Jugador jugadorPie){
-            this.jugador1 = jugadorMano;
-            this.jugador2 = jugadorPie;
+            this.jugadorMano = jugadorMano;
+            this.jugadorPie = jugadorPie;
+            IniciarSiguienteRonda();
+        }
+        public void IniciarSiguienteRonda(){
+            if (rondas.Count >= 3) throw new InvalidOperationException("Una mano de truco solo tiene 3 rondas");
+            rondas.Add(new Ronda(rondas.Count + 1));
         }
         public void AgregarRonda(Ronda ronda){
             rondas.Add(ronda);
