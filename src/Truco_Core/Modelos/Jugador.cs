@@ -1,15 +1,19 @@
 namespace Truco.Core.Modelos
 {
     public class Jugador{
-        private string nombre;
+        private readonly string nombre;
         private int puntaje;
-        private List<Carta> cartas = new();
+        private readonly List<Carta> cartas = new();
         
         public string Nombre => nombre;
         public int Puntaje => puntaje;
         public IReadOnlyList<Carta> Cartas => cartas.AsReadOnly();
 
         public Jugador(string nombre){
+            if (string.IsNullOrEmpty(nombre))
+            {
+                throw new ArgumentException("El nombre no puede ser nulo o vacío", nameof(nombre));
+            }
             this.nombre = nombre;
             puntaje = 0;
             cartas = new List<Carta>(3);
