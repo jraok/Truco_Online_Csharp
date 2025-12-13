@@ -5,19 +5,24 @@ namespace Truco.Core.Modelos
         public List<Carta> Naipes { get; private set; } = new List<Carta>();
 
         public Mazo(){
-            for (int i = 0; i < 4; i++)
+            Inicializar();
+        }
+        public void Inicializar(){
+            Naipes.Clear();
+            foreach (var palo in Enum.GetValues<Palos>())
             {
                 for (int j = 1; j < 13; j++)
                 {
                     if (j != 8 && j != 9)
                     {
-                        Naipes.Add(new Carta((Palos)i, j));
+                        Naipes.Add(new Carta(palo, j));
                     }
                 }
             }
         }
         public void Barajar()
         {
+            Inicializar();
             int n = Naipes.Count;
             while (n > 1)
             {

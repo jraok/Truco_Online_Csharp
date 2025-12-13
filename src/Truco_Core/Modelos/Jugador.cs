@@ -38,5 +38,8 @@ namespace Truco.Core.Modelos
         public void SumarPuntos(int puntos){
             puntaje += puntos;
         }
+        public void LimpiarCartas(){
+            cartas.Clear();
+        }
     }
 }
