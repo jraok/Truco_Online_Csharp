@@ -1,6 +1,7 @@
 using Truco.Core.Reglas;
 using Truco.Core.Modelos;
 using Truco.Core.Juego;
+using System.Security.Principal;
 namespace Truco.App
 {
     public class Partida
@@ -10,7 +11,7 @@ namespace Truco.App
         public Jugador? TurnoActual { get; private set; }
         public Mano? ManoActual { get; private set; }
         private int PuntosPartida = 30;
-        private int ManosJugadas = 1;
+        private int ManosJugadas = 0;
 
         public Partida(string nombreJ1, string nombreJ2)
         {
@@ -26,7 +27,7 @@ namespace Truco.App
             mazo.Barajar();
 
             Jugador Mano, Pie;
-
+            ManosJugadas++;
             if (ManosJugadas % 2 != 0)
             {
                 Mano = jugador1;
@@ -49,25 +50,18 @@ namespace Truco.App
         public void JugarCarta(string nombreJugador, int indiceCarta){
             if (ManoActual == null) throw new InvalidOperationException("No hay mano en juego");
             if (nombreJugador != TurnoActual.Nombre) throw new InvalidOperationException($"No es el turno de {nombreJugador}");
+            
+            var carta = TurnoActual.TirarCarta(indiceCarta);
+            ManoActual.RondaActual!.AgregarTurno(new Turno(TurnoActual.Nombre, carta));
 
-            var carta = TurnoActual.JugarCarta(indiceCarta);
-            ManoActual.RondaActual.AgregarTurno(new Turno(TurnoActual.Nombre, carta));
-            CambiarTurno();
         }
         public void CambiarTurno(){
             TurnoActual = (TurnoActual == jugador1) ? jugador2 : jugador1;
         }
-        public void JugarMano(int IndiceMano, int IndicePie)
-        {
-            bool bandera = true;
-            int MejoresMano = 0, MejoresPie = 0;
-            do
-            {
-                JugarCarta(TurnoActual.Nombre,IndiceMano);
-                JugarCarta(TurnoActual.Nombre,IndicePie);
-                
-            } while (ManoActual.Rondas.Count < 4 && bandera);
 
+        public void ResolverGanadorRonda()
+        {
+            Jugador? Winner = null;
         }
     }
 }
