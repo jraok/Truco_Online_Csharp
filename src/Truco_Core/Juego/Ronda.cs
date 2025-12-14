@@ -6,22 +6,17 @@ namespace Truco.Core.Juego
         Pie,
         Empate
     }
-    public class Ronda{
-        private int numero;
-        private List<Turno> turnos = new();
-        public int Numero => numero;
-        public List<Turno> Turnos => turnos;
+    public class Ronda(int numero)
+    {
+        public int Numero { get; private set; } = numero;
+        public List<Turno> Turnos { get; private set; } = new();
         public Ganador GanadorRonda => DeterminarGanador();
-        
-        public Ronda(int numero){
-            this.numero = numero;
-        }
         public void AgregarTurno(Turno turno){
-            turnos.Add(turno);
+            Turnos.Add(turno);
         }
         private Ganador DeterminarGanador(){
-            var carta1 = turnos[0].CartaJugada;
-            var carta2 = turnos[1].CartaJugada;
+            var carta1 = Turnos[0].CartaJugada;
+            var carta2 = Turnos[1].CartaJugada;
             return Operador.CompararCartas(carta1, carta2) switch
             {
                 1 => Ganador.Mano,

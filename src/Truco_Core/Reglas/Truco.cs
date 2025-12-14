@@ -5,16 +5,9 @@ namespace Truco.Core.Reglas
         Retruco,
         ValeCuatro,
     }
-    public class CantoTruco
+    public class CantoTruco(TipoTruco tipo, string jugador)
     {
-        private TipoTruco tipo;
-        private string jugador;
-        public TipoTruco Tipo => tipo;
-        public string Jugador => jugador;
-        
-        public CantoTruco(TipoTruco tipo, string jugador){
-            this.tipo = tipo;
-            this.jugador = jugador;
-        }
+        public TipoTruco Tipo { get; private set; } = tipo;
+        public string Jugador { get; private set; } = jugador;
     }
 }

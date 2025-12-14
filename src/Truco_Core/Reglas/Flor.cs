@@ -6,18 +6,10 @@ namespace Truco.Core.Reglas
         ContraFlor,
         ContraFlorResto,
     }
-    public class CantoFlor
+    public class CantoFlor(TipoFlor tipo, string jugador)
     {
-        private TipoFlor tipo;
-        private string jugador;
-        public TipoFlor Tipo => tipo;
-        public string Jugador => jugador;
-
-        public CantoFlor(TipoFlor tipo, string jugador)
-        {
-            this.tipo = tipo;
-            this.jugador = jugador;
-        }
+        public TipoFlor Tipo { get; private set; } = tipo;
+        public string Jugador { get; private set; } = jugador;
     }
 }
     

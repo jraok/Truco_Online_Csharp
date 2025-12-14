@@ -6,18 +6,10 @@ namespace Truco.Core.Reglas
         RealEnvido,
         FaltaEnvido,
     }
-    public class CantoEnvido
+    public class CantoEnvido(TipoEnvido tipo, string jugador)
     {
-        private TipoEnvido tipo;
-        private string jugador;
-        public TipoEnvido Tipo => tipo;
-        public string Jugador => jugador;
-
-        public CantoEnvido(TipoEnvido tipo, string jugador)
-        {
-            this.tipo = tipo;
-            this.jugador = jugador;
-        }
+        public TipoEnvido Tipo { get; private set; } = tipo;
+        public string Jugador { get; private set; } = jugador;
     }
 }
     
