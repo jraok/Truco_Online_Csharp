@@ -1,7 +1,4 @@
-using Truco.Core.Juego;
-using Truco.Core.Modelos;
 using Truco.Core.Reglas;
-
 namespace Truco.App.Acciones
 {
     public static class CantarEnvido
@@ -11,6 +8,7 @@ namespace Truco.App.Acciones
             if (partida.TurnoActual.Nombre != nombreJugador) throw new InvalidOperationException("No es el turno del jugador");
             if (partida.ManoActual.RondaActual.Turnos.Count > 1) throw new InvalidOperationException("Ya no se puede cantar envido");
             partida.ManoActual.AgregarCanto(tipo,nombreJugador);
+            partida.CambiarTurno();
         }
     }
 }
