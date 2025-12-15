@@ -9,63 +9,25 @@ namespace Truco.App
         public Jugador Jugador2 { get; private set; } = new Jugador(nombreJ2);
         public Jugador? TurnoActual { get; private set; }
         public Mano? ManoActual { get; private set; }
-        private readonly int PuntosPartida = 30;
-        private int ManosJugadas = 0;
+        public int PuntosPartida { get; private set; } = 30;
+        public int ManosJugadas { get; private set; } = 0;
 
         public void CambiarTurno(){
-            TurnoActual = (TurnoActual == Jugador1) ? Jugador2 : Jugador1;
+            TurnoActual = (TurnoActual == Jugador1) 
+            ? Jugador2 
+            : Jugador1;
         }
-        public void ResolverGanadorRonda()
-        {
-            string NombreGanador = ManoActual!.RondaActual!.GanadorRonda;
-            if (NombreGanador != "Empate")
-            {
-                TurnoActual = (NombreGanador == Jugador1.Nombre) ? Jugador1 : Jugador2;
-            }else{
-                TurnoActual = (ManoActual!.RondaActual!.Turnos[0].Jugador == Jugador1.Nombre) ? Jugador1 : Jugador2;
-            }
-        }
-        public void IniciarMano()
-        {
-            if (Jugador1.Puntaje >= PuntosPartida || Jugador2.Puntaje >= PuntosPartida) throw new InvalidOperationException("La partida terminó");
-
-            var mazo = new Mazo();
-            mazo.Barajar();
-
-            Jugador Mano, Pie;
+        public void SumarMano(){
             ManosJugadas++;
-            if (ManosJugadas % 2 != 0)
-            {
-                Mano = Jugador1;
-                Pie = Jugador2;
-            }else{
-                Mano = Jugador2;
-                Pie = Jugador1;
-            }
-
-            Mano.LimpiarCartas();
-            Pie.LimpiarCartas();
-
-            Mano.RecibirCartas(mazo.Repartir(3));
-            Pie.RecibirCartas(mazo.Repartir(3));
-
-            ManoActual = new Mano(Mano, Pie);
-            ManoActual.IniciarSiguienteRonda();
-            TurnoActual = Mano;
         }
-        public void JugarCarta(string nombreJugador, int indiceCarta){
-            if (ManoActual == null) throw new InvalidOperationException("No hay mano en juego");
-            if (nombreJugador != TurnoActual.Nombre) throw new InvalidOperationException($"No es el turno de {nombreJugador}");
-            
-            var carta = TurnoActual.TirarCarta(indiceCarta);
-            ManoActual.RondaActual!.AgregarTurno(new Turno(TurnoActual.Nombre, carta));
-            if (ManoActual.RondaActual.RondaCompleta())
-            {
-                ResolverGanadorRonda();
-                ManoActual.RegistrarGanadorRonda();
-            }else{
-                CambiarTurno();
-            }
-        }       
+        public void AsignarMano(Mano mano){
+            ManoActual = mano;
+        }
+        public void AsignarTurno(Jugador jugador){
+            if (Jugador1 != jugador && Jugador2 != jugador) throw new ArgumentException("El jugador no pertenece a la partida");
+            TurnoActual = jugador;
+        }
+        public Jugador JugadorMano => (ManosJugadas % 2 != 0) ? Jugador1 : Jugador2;
+        public Jugador JugadorPie => (ManosJugadas % 2 != 0) ? Jugador2 : Jugador1;
     }
 }
