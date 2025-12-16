@@ -1,4 +1,3 @@
-using Truco.App;
 using Truco.Core.Juego;
 using Truco.Core.Modelos;
 

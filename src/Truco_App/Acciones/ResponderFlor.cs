@@ -1,6 +1,4 @@
-using Truco.Core.Juego;
 using Truco.Core.Reglas;
-
 namespace Truco.App.Acciones
 {
     public static class ResponderFlor
@@ -11,22 +9,21 @@ namespace Truco.App.Acciones
                 throw new InvalidOperationException("No hay mano en juego");
             if (nombreJugador != partida.TurnoActual.Nombre) 
                 throw new InvalidOperationException($"No es el turno de {nombreJugador}");
-            if (partida.ManoActual.Rondas.Count > 1)
-                throw new InvalidOperationException("Ya no se puede cantar flor después de la primera ronda");
-            if (partida.ManoActual.RondaActual.RondaCompleta()) 
-                throw new InvalidOperationException("Ya no se puede cantar flor");
             
-            var ultimoCanto = partida.ManoActual.SecuenciaFlor.Last();
+            var ultimoCanto = partida.ManoActual.SecuenciaFlor.LastOrDefault();
             if (ultimoCanto.Jugador == nombreJugador) 
                 throw new InvalidOperationException("No puedes contestar tu canto");
 
-            var cantor = (nombreJugador == partida.Jugador1.Nombre) 
+            var quienResponde = (nombreJugador == partida.Jugador1.Nombre) 
                 ? partida.Jugador1 
                 : partida.Jugador2;
 
+            if (Operador.CalcularFlor(quienResponde.Cartas) == 0)
+                throw new InvalidOperationException("No tienes flor para aceptar");
+
             var resto = Operador.CalcularResto(partida.Jugador1, partida.Jugador2, partida.PuntosPartida);
-            
-            if (Operador.CalcularFlor(cantor.Cartas) != 0 && acepta){
+
+            if (acepta){
                 var puntosFlor = Operador.SumaDeFlor(partida.ManoActual.SecuenciaFlor, resto);
 
                 var florJ1 = Operador.CalcularFlor(partida.Jugador1.Cartas);
