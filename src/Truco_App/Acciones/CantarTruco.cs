@@ -20,8 +20,6 @@ namespace Truco.App.Acciones
                     throw new InvalidOperationException("Solo se puede cantar retruco");
                 if (ultimoCanto.Tipo == TipoTruco.Retruco && tipo != TipoTruco.ValeCuatro)
                     throw new InvalidOperationException("Solo se puede cantar vale cuatro");
-                if (ultimoCanto.Tipo == TipoTruco.ValeCuatro)
-                    throw new InvalidOperationException("No se puede retrucar más");
             }else{
                 if (tipo != TipoTruco.Truco) throw new InvalidOperationException("El primer canto debe ser truco");
             }
