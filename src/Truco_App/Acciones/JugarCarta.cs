@@ -34,6 +34,8 @@ namespace Truco.App.Acciones
 
                 if (partida.ManoActual.Finalizada) {
                     ResolverPuntosTruco(partida);
+                }else{
+                    partida.ManoActual.IniciarSiguienteRonda();
                 }
             }else{
                 partida.CambiarTurno();
