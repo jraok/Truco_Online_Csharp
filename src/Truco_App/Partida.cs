@@ -1,4 +1,3 @@
-using Truco.Core.Reglas;
 using Truco.Core.Modelos;
 using Truco.Core.Juego;
 namespace Truco.App
@@ -24,7 +23,8 @@ namespace Truco.App
             ManoActual = mano;
         }
         public void AsignarTurno(Jugador jugador){
-            if (Jugador1 != jugador && Jugador2 != jugador) throw new ArgumentException("El jugador no pertenece a la partida");
+            if (Jugador1 != jugador && Jugador2 != jugador) 
+                throw new ArgumentException("El jugador no pertenece a la partida");
             TurnoActual = jugador;
         }
         public Jugador JugadorMano => (ManosJugadas % 2 != 0) ? Jugador1 : Jugador2;

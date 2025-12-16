@@ -1,4 +1,3 @@
-using Truco.App;
 using Truco.Core.Modelos;
 using Truco.Core.Reglas;
 namespace Truco.Core.Juego

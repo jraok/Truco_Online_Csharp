@@ -43,10 +43,11 @@ namespace Truco.App.Acciones
         }
         private static void ResolverPuntosTruco(Partida partida)
         {
-            if (partida.ManoActual.GanadorMano() == null) return;
+            var nombreGanador = partida.ManoActual.GanadorMano();
+            if (nombreGanador == null) return;
             var puntosTruco = Operador.SumaDeTruco(partida.ManoActual.SecuenciaTruco);
             
-            var ganador = (partida.ManoActual.GanadorMano() == partida.Jugador1.Nombre) 
+            var ganador = (nombreGanador == partida.Jugador1.Nombre) 
             ? partida.Jugador1 
             : partida.Jugador2;
 

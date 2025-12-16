@@ -54,8 +54,8 @@ namespace Truco.Core.Reglas
                 {
                     if (cartas[i].Palo == cartas[j].Palo)
                     {
-                        int Valor = cartas[i].Numero >= 10 ? 0 : cartas[i].Numero;
-                        int suma = Valor + cartas[j].Numero + BonusEnvido;
+                        int valor = cartas[i].Numero >= 10 ? 0 : cartas[i].Numero;
+                        int suma = valor + cartas[j].Numero + BonusEnvido;
                         if (suma > puntos) puntos = suma;
                     }
                 }

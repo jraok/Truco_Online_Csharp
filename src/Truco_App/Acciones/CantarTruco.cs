@@ -10,7 +10,7 @@ namespace Truco.App.Acciones
             if (partida.TurnoActual.Nombre != nombreJugador) 
                 throw new InvalidOperationException("No es el turno del jugador");
 
-            var ultimoCanto = partida.ManoActual.SecuenciaTruco.LastOrDefault();;
+            var ultimoCanto = partida.ManoActual.SecuenciaTruco.LastOrDefault();
 
             if (ultimoCanto != null)
             {
