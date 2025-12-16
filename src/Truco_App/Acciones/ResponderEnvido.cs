@@ -6,9 +6,11 @@ namespace Truco.App.Acciones
     {
         public static void Ejecutar(Partida partida, string nombreJugador, bool acepta)
         {
-            if (partida.ManoActual.SecuenciaEnvido.Count == 0) throw new InvalidOperationException("No hay envido para jugar");
+            if (partida.ManoActual.SecuenciaEnvido.Count == 0) 
+                throw new InvalidOperationException("No hay envido para jugar");
             var ultimoCanto = partida.ManoActual.SecuenciaEnvido.Last();
-            if (ultimoCanto.Jugador == nombreJugador) throw new InvalidOperationException("No puedes contestar tu envido");
+            if (ultimoCanto.Jugador == nombreJugador) 
+                throw new InvalidOperationException("No puedes contestar tu canto");
 
             var resto = Operador.CalcularResto(partida.Jugador1, partida.Jugador2, partida.PuntosPartida);
             var puntosEnJuego = Operador.SumaDeEnvido(partida.ManoActual.SecuenciaEnvido, resto);

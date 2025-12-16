@@ -1,3 +1,4 @@
+using Truco.App;
 using Truco.Core.Modelos;
 using Truco.Core.Reglas;
 namespace Truco.Core.Juego
@@ -12,6 +13,7 @@ namespace Truco.Core.Juego
         public Jugador JugadorMano { get; private set; } = jugadorMano;
         public Jugador JugadorPie { get; private set; } = jugadorPie;
         public Ronda? RondaActual => Rondas.LastOrDefault();
+        public bool Finalizada { get; private set; } = false;
 
         public void IniciarSiguienteRonda(){
             if (Rondas.Count >= 3) throw new InvalidOperationException("Una mano de truco solo tiene 3 Rondas");
@@ -20,6 +22,7 @@ namespace Truco.Core.Juego
         public void RegistrarGanadorRonda()
         {
             RegistroGanadores.Add(RondaActual.GanadorRonda);
+            if (GanadorMano() != null) FinalizarMano();
         }
         public string? GanadorMano()
         {
@@ -35,9 +38,7 @@ namespace Truco.Core.Juego
             if (RegistroGanadores.Count == 2)
             {
                 if ((ganadasMano == 1 || ganadasPie == 1) && empates == 1)
-                {
                     return (ganadasMano == 1) ? JugadorMano.Nombre : JugadorPie.Nombre;
-                }
                 if (empates == 2) return null;
             }
             if (RegistroGanadores.Count == 3)
@@ -46,6 +47,9 @@ namespace Truco.Core.Juego
                 if (RegistroGanadores[2] == "Empate") return RegistroGanadores[0];
             }
             return null;
+        }
+        public void FinalizarMano(){
+            Finalizada = true;
         }
         public void AgregarCanto(TipoEnvido envido, string jugador){
             SecuenciaEnvido.Add(new CantoEnvido(envido,jugador));

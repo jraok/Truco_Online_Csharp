@@ -31,9 +31,24 @@ namespace Truco.App.Acciones
             {
                 ResolverGanadorRonda(partida);
                 partida.ManoActual.RegistrarGanadorRonda();
+
+                if (partida.ManoActual.Finalizada) {
+                    ResolverPuntosTruco(partida);
+                }
             }else{
                 partida.CambiarTurno();
             }
+        }
+        private static void ResolverPuntosTruco(Partida partida)
+        {
+            if (partida.ManoActual.GanadorMano() == null) return;
+            var puntosTruco = Operador.SumaDeTruco(partida.ManoActual.SecuenciaTruco);
+            
+            var ganador = (partida.ManoActual.GanadorMano() == partida.Jugador1.Nombre) 
+            ? partida.Jugador1 
+            : partida.Jugador2;
+
+            ganador.SumarPuntos(puntosTruco);
         }
     }
 }
