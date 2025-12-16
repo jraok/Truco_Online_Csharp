@@ -42,25 +42,28 @@ namespace Truco.Core.Reglas
                 return (PuntosPartida - J2.Puntaje);
             }
         }
-        public static int CalcularEnvido(IReadOnlyList<Carta> cartas){
+        private static int ValorCarta(Carta carta)
+        {
+            return carta.Numero >= 10 ? 0 : carta.Numero;
+        }
+        public static int CalcularEnvido(IReadOnlyList<Carta> cartas)
+        {
             if (cartas.Count != 3)
-            {
                 throw new InvalidOperationException("El envido solo se calcula con 3 cartas");
-            }
+
             int puntos = 0;
             for (int i = 0; i < cartas.Count; i++)
             {
-                for (int j = i+1 ; j < cartas.Count; j++)
+                for (int j = i + 1; j < cartas.Count; j++)
                 {
                     if (cartas[i].Palo == cartas[j].Palo)
                     {
-                        int valor = cartas[i].Numero >= 10 ? 0 : cartas[i].Numero;
-                        int suma = valor + cartas[j].Numero + BonusEnvido;
+                        int suma = ValorCarta(cartas[i]) + ValorCarta(cartas[j]) + BonusEnvido;
                         if (suma > puntos) puntos = suma;
                     }
                 }
             }
-            if (puntos == 0) puntos = cartas.Max(c => c.Numero >= 10 ? 0 : c.Numero);
+            if (puntos == 0) puntos = cartas.Max(c => ValorCarta(c));
             return puntos;
         }
         public static int CalcularFlor(IReadOnlyList<Carta> cartas){
