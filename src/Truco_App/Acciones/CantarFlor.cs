@@ -6,7 +6,7 @@ namespace Truco.App.Acciones
     {
         public static void Ejecutar(Partida partida, string nombreJugador, TipoFlor tipo)
         {
-            if (partida.ManoActual == null && !partida.ManoActual.Finalizada)
+            if (partida.ManoActual == null || partida.ManoActual.Finalizada)
                 throw new InvalidOperationException("No hay mano en juego");
             if (partida.TurnoActual.Nombre != nombreJugador)
                 throw new InvalidOperationException($"No es el turno de {nombreJugador}");
