@@ -9,8 +9,10 @@ namespace Truco.App.Acciones
                 throw new InvalidOperationException("No hay mano en juego");
             if (nombreJugador != partida.TurnoActual.Nombre) 
                 throw new InvalidOperationException($"No es el turno de {nombreJugador}");
-            
-            var ultimoCanto = partida.ManoActual.SecuenciaFlor.LastOrDefault();
+            if (partida.ManoActual.SecuenciaFlor.Count == 0) 
+                throw new InvalidOperationException("No hay flor para responder");
+                
+            var ultimoCanto = partida.ManoActual.SecuenciaFlor.Last();
             if (ultimoCanto.Jugador == nombreJugador) 
                 throw new InvalidOperationException("No puedes contestar tu canto");
 
