@@ -12,11 +12,11 @@ namespace Truco.App.Acciones
 
             var resto = Operador.CalcularResto(partida.Jugador1, partida.Jugador2, partida.PuntosPartida);
             var puntosEnJuego = Operador.SumaDeEnvido(partida.ManoActual.SecuenciaEnvido, resto);
+            if (ultimoCanto.Jugador == nombreJugador) 
+                throw new InvalidOperationException("No puedes contestar tu canto");
             
             if (acepta)
             {
-                if (ultimoCanto.Jugador == nombreJugador) 
-                    throw new InvalidOperationException("No puedes contestar tu canto");
                 var tantosJ1 = Operador.CalcularEnvido(partida.Jugador1.Cartas);
                 var tantosJ2 = Operador.CalcularEnvido(partida.Jugador2.Cartas);
 
