@@ -3,7 +3,7 @@ using Truco.Core.Modelos;
 
 namespace Truco.Core.Juego
 {
-    public class Arbitro
+    public class Arbitro(string nombreJ1, string nombreJ2)
     {
         private enum EstadoMano
         {
@@ -14,15 +14,10 @@ namespace Truco.Core.Juego
             EsperandoRespuestaFlor,
             Terminada
         }
-        private readonly Partida partida;
+        private readonly Partida partida = new Partida(nombreJ1, nombreJ2);
         public Partida Partida => partida;
-        private EstadoMano estadoMano;
+        private EstadoMano estadoMano = EstadoMano.EsperandoMano;
 
-        public Arbitro(string nombreJ1, string nombreJ2)
-        {
-            this.partida = new Partida(nombreJ1, nombreJ2);
-            estadoMano = EstadoMano.EsperandoMano;
-        }
         public void IniciarMano()
         {
             if (estadoMano != EstadoMano.EsperandoMano)
@@ -39,6 +34,8 @@ namespace Truco.Core.Juego
             JPie.LimpiarCartas();
             JMano.RecibirCartas(mazo.Repartir(3));
             JPie.RecibirCartas(mazo.Repartir(3));
+            JMano.AsignarEnvido(Operador.CalcularEnvido(JMano.Cartas));
+            JPie.AsignarEnvido(Operador.CalcularEnvido(JPie.Cartas));
 
             partida.AsignarMano(new Mano(JMano, JPie));
             partida.ManoActual.IniciarSiguienteRonda();
@@ -158,8 +155,8 @@ namespace Truco.Core.Juego
             {
                 var puntos = Operador.SumaDeEnvido(partida.ManoActual.SecuenciaEnvido,resto);
 
-                var tantosJ1 = Operador.CalcularEnvido(partida.Jugador1.Cartas);
-                var tantosJ2 = Operador.CalcularEnvido(partida.Jugador2.Cartas);
+                var tantosJ1 = partida.Jugador1.PuntosEnvido;
+                var tantosJ2 = partida.Jugador2.PuntosEnvido;
 
                 if (tantosJ1 > tantosJ2)
                     partida.Jugador1.SumarPuntos(puntos);
@@ -286,7 +283,7 @@ namespace Truco.Core.Juego
 
             jugador.SumarPuntos(puntos);
         }
-        private bool EnvidoValido(TipoEnvido nuevo, TipoEnvido? anterior)
+        private static bool EnvidoValido(TipoEnvido nuevo, TipoEnvido? anterior)
         {
             if (anterior == null)
                 return true;
@@ -299,7 +296,7 @@ namespace Truco.Core.Juego
                 _ => false
             };
         }
-        private bool FlorValida(TipoFlor nuevo, TipoFlor? anterior)
+        private static bool FlorValida(TipoFlor nuevo, TipoFlor? anterior)
         {
             if (anterior == null)
                 return nuevo == TipoFlor.Flor;

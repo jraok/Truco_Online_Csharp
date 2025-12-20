@@ -3,10 +3,12 @@ namespace Truco.Core.Modelos
     public class Jugador{
         private readonly string nombre;
         private int puntaje;
+        private int puntosEnvido = 0;
         private readonly List<Carta> cartas = new();
         
         public string Nombre => nombre;
         public int Puntaje => puntaje;
+        public int PuntosEnvido => puntosEnvido;
         public IReadOnlyList<Carta> Cartas => cartas.AsReadOnly();
 
         public Jugador(string nombre){
@@ -15,7 +17,6 @@ namespace Truco.Core.Modelos
                 throw new ArgumentException("El nombre no puede ser nulo o vacío", nameof(nombre));
             }
             this.nombre = nombre;
-            puntaje = 0;
             cartas = new List<Carta>(3);
         }
 
@@ -34,7 +35,9 @@ namespace Truco.Core.Modelos
             cartas.RemoveAt(indice);
             return carta;
         }
-
+        public void AsignarEnvido(int puntos){
+            puntosEnvido = puntos;
+        }
         public void SumarPuntos(int puntos){
             puntaje += puntos;
         }
