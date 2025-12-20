@@ -293,7 +293,7 @@ namespace Truco.Core.Juego
 
             return anterior switch
             {
-                TipoEnvido.Envido => nuevo == TipoEnvido.Envido || nuevo == TipoEnvido.RealEnvido,
+                TipoEnvido.Envido => nuevo == TipoEnvido.Envido || nuevo == TipoEnvido.RealEnvido || nuevo == TipoEnvido.FaltaEnvido,
                 TipoEnvido.RealEnvido => nuevo == TipoEnvido.FaltaEnvido,
                 TipoEnvido.FaltaEnvido => false,
                 _ => false
