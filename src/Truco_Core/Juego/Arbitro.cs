@@ -14,7 +14,7 @@ namespace Truco.Core.Juego
             EsperandoRespuestaFlor,
             Terminada
         }
-        private readonly Partida partida = new Partida(nombreJ1, nombreJ2);
+        private readonly Partida partida = new(nombreJ1, nombreJ2);
         public Partida Partida => partida;
         private EstadoMano estadoMano = EstadoMano.EsperandoMano;
 
@@ -206,8 +206,8 @@ namespace Truco.Core.Juego
             {
                 var puntos = Operador.SumaDeFlor(partida.ManoActual.SecuenciaFlor, resto);
 
-                var florJ1 = Operador.CalcularFlor(partida.Jugador1.Cartas);
-                var florJ2 = Operador.CalcularFlor(partida.Jugador2.Cartas);
+                var florJ1 = partida.Jugador1.PuntosFlor;
+                var florJ2 = partida.Jugador2.PuntosFlor;
 
                 if (florJ1 > florJ2)
                     partida.Jugador1.SumarPuntos(puntos);

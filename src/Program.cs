@@ -4,7 +4,7 @@ using Truco.Core.Modelos;
 
 var arbitro = new Arbitro("Juan", "Pedro");
 var partida = arbitro.Partida;
-Console.Clear();    // Limpia la consola
+Console.Clear();   
 
 Console.WriteLine("=== TRUCO ARGENTINO ===");
 Console.WriteLine($"Partida: {partida.Jugador1.Nombre} vs {partida.Jugador2.Nombre}");
@@ -90,7 +90,7 @@ while (partida.Jugador1.Puntaje < partida.PuntosPartida &&
                 Console.WriteLine($"ERROR: {ex.Message}");
                 Console.WriteLine($"\n❌ ERROR: {ex.Message}");
                 Thread.Sleep(1800); // Espera 1.8 segundos
-                Console.Clear();    // Limpia la consola
+                Console.Clear();   
             }
             
             MostrarPuntajes(partida);
