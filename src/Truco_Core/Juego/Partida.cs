@@ -1,6 +1,5 @@
 using Truco.Core.Modelos;
-using Truco.Core.Juego;
-namespace Truco.App
+namespace Truco.Core.Juego
 {
     public class Partida(string nombreJ1, string nombreJ2)
     {
