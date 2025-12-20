@@ -34,8 +34,6 @@ namespace Truco.Core.Juego
             JPie.LimpiarCartas();
             JMano.RecibirCartas(mazo.Repartir(3));
             JPie.RecibirCartas(mazo.Repartir(3));
-            JMano.AsignarEnvido(Operador.CalcularEnvido(JMano.Cartas));
-            JPie.AsignarEnvido(Operador.CalcularEnvido(JPie.Cartas));
 
             partida.AsignarMano(new Mano(JMano, JPie));
             partida.ManoActual.IniciarSiguienteRonda();

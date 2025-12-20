@@ -4,6 +4,7 @@ using Truco.Core.Modelos;
 
 var arbitro = new Arbitro("Juan", "Pedro");
 var partida = arbitro.Partida;
+Console.Clear();    // Limpia la consola
 
 Console.WriteLine("=== TRUCO ARGENTINO ===");
 Console.WriteLine($"Partida: {partida.Jugador1.Nombre} vs {partida.Jugador2.Nombre}");
@@ -125,8 +126,8 @@ while (partida.Jugador1.Puntaje < partida.PuntosPartida &&
 
     static void MostrarEnvidos(Partida partida)
     {
-        var envido1 = Operador.CalcularEnvido(partida.Jugador1.Cartas);
-        var envido2 = Operador.CalcularEnvido(partida.Jugador2.Cartas);
+        var envido1 = partida.Jugador1.PuntosEnvido;
+        var envido2 = partida.Jugador2.PuntosEnvido;
         Console.WriteLine($"Envidos: {partida.Jugador1.Nombre} tiene {envido1}, {partida.Jugador2.Nombre} tiene {envido2}");
     }
 

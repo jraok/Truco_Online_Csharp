@@ -1,3 +1,5 @@
+using Truco.Core.Reglas;
+
 namespace Truco.Core.Modelos
 {
     public class Jugador{
@@ -25,6 +27,7 @@ namespace Truco.Core.Modelos
                 throw new InvalidOperationException($"El jugador {nombre} no puede recibir más cartas");
             };
             this.cartas.AddRange(cartas);
+            AsignarEnvido(Operador.CalcularEnvido(this.cartas));
         }
 
         public Carta TirarCarta(int indice){
@@ -35,7 +38,7 @@ namespace Truco.Core.Modelos
             cartas.RemoveAt(indice);
             return carta;
         }
-        public void AsignarEnvido(int puntos){
+        private void AsignarEnvido(int puntos){
             puntosEnvido = puntos;
         }
         public void SumarPuntos(int puntos){
