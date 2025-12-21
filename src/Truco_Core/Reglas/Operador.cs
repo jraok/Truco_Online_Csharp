@@ -35,12 +35,7 @@ namespace Truco.Core.Reglas
             };
         }
         public static int CalcularResto(Jugador J1, Jugador J2, int PuntosPartida){
-            if (J1.Puntaje > J2.Puntaje)
-            {
-                return (PuntosPartida - J1.Puntaje);
-            }else{
-                return (PuntosPartida - J2.Puntaje);
-            }
+            return PuntosPartida - Math.Max(J1.Puntaje, J2.Puntaje);
         }
         private static int ValorCarta(Carta carta)
         {

@@ -119,17 +119,19 @@ namespace Truco.Core.Juego
         }
         public void CantarEnvido(string nombreJugador, TipoEnvido tipo)
         {
-            if (estadoMano != EstadoMano.EsperandoRespuestaEnvido && estadoMano != EstadoMano.EnJuego)
+            if (!PuedeCanarEnvido())
                 throw new InvalidOperationException("No se puede cantar envido ahora");
             if (nombreJugador != partida.TurnoActual!.Nombre)
                 throw new InvalidOperationException("No es tu turno");
-            
+            if (partida.ManoActual!.RondaActual!.RondaCompleta())
+                throw new InvalidOperationException("Ya no se puede cantar envido");
+
+            if (estadoMano == EstadoMano.EsperandoRespuestaTruco)
+                partida.ManoActual.SecuenciaTruco.Clear();
+
             var ultimo = partida.ManoActual.SecuenciaEnvido.LastOrDefault();
             if (ultimo != null && ultimo.Jugador == nombreJugador)
                 throw new InvalidOperationException("No podés responder tu propio envido");
-
-            if (partida.ManoActual!.RondaActual!.RondaCompleta())
-                throw new InvalidOperationException("Ya no se puede cantar envido");
 
             if (!EnvidoValido(tipo, ultimo?.Tipo))
                 throw new InvalidOperationException("Canto invalido");
@@ -179,7 +181,7 @@ namespace Truco.Core.Juego
         }
         public void CantarFlor(string nombreJugador, TipoFlor tipo)
         {
-            if (estadoMano != EstadoMano.EnJuego)
+            if (estadoMano != EstadoMano.EnJuego && estadoMano != EstadoMano.EsperandoRespuestaEnvido)
                 throw new InvalidOperationException("No es momento de cantar flor");
             if (nombreJugador != partida.TurnoActual!.Nombre)
                 throw new InvalidOperationException("No es tu turno");
@@ -334,6 +336,19 @@ namespace Truco.Core.Juego
                 TipoFlor.ContraFlor => tipo == TipoFlor.ContraFlorResto,
                 _ => false
             };
+        }
+        private bool PuedeCanarEnvido()
+        {
+            if (estadoMano == EstadoMano.EnJuego)
+                return true;
+            if (estadoMano == EstadoMano.EsperandoRespuestaEnvido)
+                return true;
+            
+            if (estadoMano == EstadoMano.EsperandoRespuestaTruco && 
+                !partida.ManoActual!.RondaActual!.RondaCompleta())
+                return true;
+            
+            return false;
         }
     }
 
