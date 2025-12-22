@@ -27,10 +27,8 @@ namespace Truco.UI
         }
         public void EncabezadoMano()
         {
-            Console.WriteLine($"\n{'─', 50}");
             Console.WriteLine($"MANO #{arbi.Partida.ManosJugadas}");
             Console.WriteLine($"Mano: {arbi.Partida.JugadorMano.Nombre} | Pie: {arbi.Partida.JugadorPie.Nombre}");
-            Console.WriteLine($"{'─', 50}\n");
         }
         public void Opciones()
         {
@@ -51,6 +49,12 @@ namespace Truco.UI
             if (arbi.PuedeResponderEnvido)
                 Console.WriteLine("  [re] Responder Envido");
 
+            if (arbi.PuedeCantarFlor)
+                Console.WriteLine("  [f]  Cantar Flor");
+
+            if (arbi.PuedeResponderFlor)
+                Console.WriteLine("  [rf] Responder Flor");
+
             if (arbi.PuedeIrAlMazo)
                 Console.WriteLine("  [m]  Irse al mazo");
 
@@ -69,29 +73,43 @@ namespace Truco.UI
         }
         public void Puntajes()
         {
-            Console.WriteLine("\n┌─────────── PUNTAJES ───────────┐");
-            Console.WriteLine($"│ {arbi.Partida.Jugador1.Nombre,-15} {arbi.Partida.Jugador1.Puntaje,3} pts │");
-            Console.WriteLine($"│ {arbi.Partida.Jugador2.Nombre,-15} {arbi.Partida.Jugador2.Puntaje,3} pts │");
-            Console.WriteLine("└─────────────────────────────────┘");
+            Console.WriteLine("\n─────────── PUNTAJES ───────────");
+            Console.WriteLine($"\t{arbi.Partida.Jugador1.Nombre,-15} {arbi.Partida.Jugador1.Puntaje,3} pts");
+            Console.WriteLine($"\t{arbi.Partida.Jugador2.Nombre,-15} {arbi.Partida.Jugador2.Puntaje,3} pts");
+            Console.WriteLine("─────────────────────────────────");
         }
         public void MostrarTurnoActual()
         {
-                var turno = arbi.Partida.TurnoActual;
+            var turno = arbi.Partida.TurnoActual;
             Console.WriteLine($"\n>> TURNO DE {turno?.Nombre.ToUpper()}");
         }
-        public void MostrarRondaActual()
+        public void MostrarManoActual()
         {
-            var ronda = arbi.Partida.ManoActual?.RondaActual;
-            if (ronda == null || ronda.Turnos.Count == 0) return;
+            var mano = arbi.Partida.ManoActual;
+            if (mano == null) return;
 
-            Console.WriteLine($"\nRonda {ronda.Numero}:");
-            foreach (var turno in ronda.Turnos)
+            var turnosMano = mano.Rondas.SelectMany(r => r.Turnos).Where(t => t.Jugador == mano.JugadorMano.Nombre).ToList();
+            
+            var turnosPie = mano.Rondas.SelectMany(r => r.Turnos).Where(t => t.Jugador == mano.JugadorPie.Nombre).ToList();
+
+            Console.Write($"\n{mano.JugadorMano.Nombre}: ");
+            foreach (var turno in turnosMano)
             {
-                Console.Write($"  {turno.Jugador}: ");
                 Console.ForegroundColor = ColorPorPalo(turno.CartaJugada.Palo);
-                Console.WriteLine(turno.CartaJugada.Nombre);
+                Console.Write($"[{turno.CartaJugada.Nombre}] ");
                 Console.ResetColor();
             }
+            Console.WriteLine();
+
+            // Mostrar cartas del Pie
+            Console.Write($"{mano.JugadorPie.Nombre}: ");
+            foreach (var turno in turnosPie)
+            {
+                Console.ForegroundColor = ColorPorPalo(turno.CartaJugada.Palo);
+                Console.Write($"[{turno.CartaJugada.Nombre}] ");
+                Console.ResetColor();
+            }
+            Console.WriteLine();
         }
         public void MostrarMensaje(string mensaje)
         {

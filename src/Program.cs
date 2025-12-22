@@ -16,17 +16,18 @@ while (partida.Jugador1.Puntaje < partida.PuntosPartida && partida.Jugador2.Punt
     arbitro.IniciarMano();
     while(!partida.ManoActual.Finalizada){
         Console.Clear();
-        pantallas.MostrarRondaActual();
+        pantallas.EncabezadoMano();
+        pantallas.Puntajes();
         pantallas.MostrarTurnoActual();
-        pantallas.CartasEnMano(partida.Jugador1);
+        pantallas.MostrarManoActual();
+        pantallas.CartasEnMano(partida.TurnoActual);
         pantallas.Opciones();
 
         var opcion = Console.ReadLine()?.ToLower().Trim();
 
         try
         {
-            ProcesarOpcion(opcion, arbitro,pantallas);
-            
+            ProcesarOpcion(opcion, arbitro,pantallas);   
         }
         catch (Exception ex)
         {
@@ -103,7 +104,7 @@ static void ProcesarOpcion(string opcion, Arbitro arbitro, Pantallas pantallas)
             break;
 
         case "f":
-            Console.WriteLine("\n1. Flor \n2. Contra Flor\n1.Contra Flor al Resto");
+            Console.WriteLine("\n1. Flor \n2. Contra Flor\n3. Contra Flor al Resto");
             Console.Write("Elegí: ");
             var tipoFlor = int.Parse(Console.ReadLine() ?? "1");
             arbitro.CantarFlor(jugador, (TipoFlor)(tipoFlor - 1));

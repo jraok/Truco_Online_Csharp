@@ -337,7 +337,7 @@ namespace Truco.Core.Juego
                     return false;
                 bool esMomento = estadoMano == EstadoMano.EnJuego || estadoMano == EstadoMano.EsperandoRespuestaEnvido;
                 bool estaCompletaRonda = partida.ManoActual.Rondas.Count > 1 || partida.ManoActual.RondaActual!.RondaCompleta();
-                bool tieneFlor = Operador.CalcularFlor(partida.TurnoActual!.Cartas) != 0;
+                bool tieneFlor = partida.TurnoActual.PuntosFlor != 0;
             
                 if (!esMomento || estaCompletaRonda || !tieneFlor)
                     return false;
