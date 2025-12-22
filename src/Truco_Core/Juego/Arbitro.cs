@@ -39,16 +39,16 @@ namespace Truco.Core.Juego
             estadoMano = EstadoMano.EnJuego;
             partida.AsignarTurno(JMano);
         }
-        public void JugarCarta(string nombreJugador, int indiceCarta)
+        public void JugarCarta(Jugador jugador, int indiceCarta)
         {
             if (!PuedeJugarCarta)
                 throw new InvalidOperationException("No se puede jugar la carta en este momento");
 
-            if (nombreJugador != partida.TurnoActual!.Nombre)
+            if (jugador != partida.TurnoActual)
                 throw new InvalidOperationException("No es tu turno");
 
-            var carta = partida.TurnoActual.TirarCarta(indiceCarta);
-            partida.ManoActual.RondaActual!.AgregarTurno(new Turno(nombreJugador, carta));
+            var carta = jugador.TirarCarta(indiceCarta);
+            partida.ManoActual.RondaActual!.AgregarTurno(new Turno(jugador.Nombre, carta));
 
             if (partida.ManoActual.RondaActual.RondaCompleta())
             {
@@ -65,9 +65,9 @@ namespace Truco.Core.Juego
                 partida.CambiarTurno();
             }
         }
-        public void CantarTruco(string nombreJugador, TipoTruco tipo)
+        public void CantarTruco(Jugador jugador, TipoTruco tipo)
         {
-            if (nombreJugador != partida.TurnoActual!.Nombre)
+            if (jugador != partida.TurnoActual)
                 throw new InvalidOperationException("No es tu turno");
             if (!PuedeCantarTruco)
                 throw new InvalidOperationException("No es momento de cantar truco");
@@ -76,7 +76,7 @@ namespace Truco.Core.Juego
 
             if (ultimoCanto != null)
             {
-                if (ultimoCanto.Jugador == nombreJugador)
+                if (ultimoCanto.Jugador == jugador.Nombre)
                     throw new InvalidOperationException("No podes subir tu propio canto");
 
                 if (ultimoCanto.Tipo == TipoTruco.Truco && tipo != TipoTruco.Retruco)
@@ -88,15 +88,15 @@ namespace Truco.Core.Juego
             else if (tipo != TipoTruco.Truco)
                 throw new InvalidOperationException("El primer canto debe ser truco");
 
-            partida.ManoActual!.AgregarCanto(tipo, nombreJugador);
+            partida.ManoActual!.AgregarCanto(tipo, jugador.Nombre);
             partida.CambiarTurno();
             estadoMano = EstadoMano.EsperandoRespuestaTruco;
         }
-        public void ResponderTruco(string nombreJugador, bool acepta)
+        public void ResponderTruco(Jugador jugador, bool acepta)
         {
             if (!PuedeResponderTruco) 
                 throw new InvalidOperationException("No hay truco para responder");
-            if (nombreJugador != partida.TurnoActual!.Nombre)
+            if (jugador != partida.TurnoActual)
                 throw new InvalidOperationException("No es tu turno");
             var ultimoCanto = partida.ManoActual.SecuenciaTruco.Last();
             
@@ -116,17 +116,17 @@ namespace Truco.Core.Juego
                 estadoMano = EstadoMano.EnJuego;
             }
         }
-        public void CantarEnvido(string nombreJugador, TipoEnvido tipo)
+        public void CantarEnvido(Jugador jugador, TipoEnvido tipo)
         {
             if (!PuedeCantarEnvido)
                 throw new InvalidOperationException("No se puede cantar envido ahora");
-            if (nombreJugador != partida.TurnoActual!.Nombre)
+            if (jugador != partida.TurnoActual)
                 throw new InvalidOperationException("No es tu turno");
             if (partida.ManoActual!.RondaActual!.RondaCompleta())
                 throw new InvalidOperationException("Ya no se puede cantar envido");
 
             var ultimo = partida.ManoActual.SecuenciaEnvido.LastOrDefault();
-            if (ultimo != null && ultimo.Jugador == nombreJugador)
+            if (ultimo != null && ultimo.Jugador == jugador.Nombre)
                 throw new InvalidOperationException("No podés responder tu propio envido");
             if (!EnvidoValido(tipo, ultimo?.Tipo))
                 throw new InvalidOperationException("Canto invalido");
@@ -134,15 +134,15 @@ namespace Truco.Core.Juego
             if (estadoMano == EstadoMano.EsperandoRespuestaTruco)
                 partida.ManoActual.SecuenciaTruco.Clear();
 
-            partida.ManoActual.AgregarCanto(tipo, nombreJugador);
+            partida.ManoActual.AgregarCanto(tipo, jugador.Nombre);
             partida.CambiarTurno();
             estadoMano = EstadoMano.EsperandoRespuestaEnvido;
         }
-        public void ResponderEnvido(string nombreJugador, bool acepta)
+        public void ResponderEnvido(Jugador jugador, bool acepta)
         {
             if (!PuedeResponderEnvido)
                 throw new InvalidOperationException("No hay envido para responder");
-            if (nombreJugador != partida.TurnoActual!.Nombre)
+            if (jugador != partida.TurnoActual)
                 throw new InvalidOperationException("No es tu turno");
 
             var ultimoCanto = partida.ManoActual.SecuenciaEnvido.LastOrDefault() 
@@ -177,11 +177,11 @@ namespace Truco.Core.Juego
             partida.CambiarTurno();
             estadoMano = EstadoMano.EnJuego;
         }
-        public void CantarFlor(string nombreJugador, TipoFlor tipo)
+        public void CantarFlor(Jugador jugador, TipoFlor tipo)
         {
             if (!PuedeCantarFlor)
                 throw new InvalidOperationException("No es momento de cantar flor");
-            if (nombreJugador != partida.TurnoActual!.Nombre)
+            if (jugador != partida.TurnoActual)
                 throw new InvalidOperationException("No es tu turno");
 
             var ultimo = partida.ManoActual.SecuenciaFlor.LastOrDefault();
@@ -191,15 +191,15 @@ namespace Truco.Core.Juego
             if (estadoMano == EstadoMano.EsperandoRespuestaEnvido)
                 partida.ManoActual.SecuenciaEnvido.Clear();
 
-            partida.ManoActual!.AgregarCanto(tipo, nombreJugador);
+            partida.ManoActual!.AgregarCanto(tipo, jugador.Nombre);
             partida.CambiarTurno();
             estadoMano = EstadoMano.EsperandoRespuestaFlor;
         }
-        public void ResponderFlor(string nombreJugador, bool acepta)
+        public void ResponderFlor(Jugador jugador, bool acepta)
         {
             if (!PuedeResponderFlor)
                 throw new InvalidOperationException("No hay flor para responder");
-            if (nombreJugador != partida.TurnoActual!.Nombre)
+            if (jugador != partida.TurnoActual)
                 throw new InvalidOperationException("No es tu turno");
             if (Operador.CalcularFlor(partida.TurnoActual.Cartas) == 0)
             {
@@ -248,17 +248,17 @@ namespace Truco.Core.Juego
             partida.CambiarTurno();
             estadoMano = EstadoMano.EnJuego;
         }
-        public void IrAlMazo(string nombreJugador)
+        public void IrAlMazo(Jugador jugador)
         {
             if (estadoMano != EstadoMano.EnJuego)
                 throw new InvalidOperationException("No se puede ir al mazo ahora");
 
-            if (nombreJugador != partida.TurnoActual!.Nombre)
+            if (jugador != partida.TurnoActual)
                 throw new InvalidOperationException("No es tu turno");
 
             var puntos = Operador.SumaDeTruco(partida.ManoActual!.SecuenciaTruco);
 
-            var ganador = nombreJugador == partida.Jugador1.Nombre
+            var ganador = jugador == partida.Jugador1
                 ? partida.Jugador2
                 : partida.Jugador1;
 
