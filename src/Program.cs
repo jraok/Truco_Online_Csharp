@@ -17,7 +17,6 @@ while (partida.Jugador1.Puntaje < partida.PuntosPartida && partida.Jugador2.Punt
     while(!partida.ManoActual.Finalizada){
         Console.Clear();
         pantallas.EncabezadoMano();
-        pantallas.Puntajes();
         pantallas.MostrarTurnoActual();
         pantallas.MostrarManoActual();
         pantallas.CartasEnMano(partida.TurnoActual);

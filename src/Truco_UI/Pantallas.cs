@@ -28,7 +28,7 @@ namespace Truco.UI
         public void EncabezadoMano()
         {
             Console.WriteLine($"MANO #{arbi.Partida.ManosJugadas}");
-            Console.WriteLine($"Mano: {arbi.Partida.JugadorMano.Nombre} | Pie: {arbi.Partida.JugadorPie.Nombre}");
+            Console.WriteLine($"Mano: {arbi.Partida.JugadorMano.Nombre} {arbi.Partida.JugadorMano.Puntaje}pts | Pie: {arbi.Partida.JugadorPie.Nombre} {arbi.Partida.JugadorPie.Puntaje}pts");
         }
         public void Opciones()
         {
@@ -86,7 +86,7 @@ namespace Truco.UI
         public void MostrarManoActual()
         {
             var mano = arbi.Partida.ManoActual;
-            if (mano == null) return;
+            if (mano == null || mano.Rondas.First().Turnos.Count == 0) return;
 
             var turnosMano = mano.Rondas.SelectMany(r => r.Turnos).Where(t => t.Jugador == mano.JugadorMano.Nombre).ToList();
             

@@ -13,6 +13,12 @@ namespace Truco.Core.Juego
         public Jugador JugadorPie { get; private set; } = jugadorPie;
         public Ronda? RondaActual => Rondas.LastOrDefault();
         public bool Finalizada { get; private set; } = false;
+        public bool EnvidoResuelto { get; private set; } = false;
+
+        public void ResolverEnvido()
+        {
+            EnvidoResuelto = true;
+        }
 
         public void IniciarSiguienteRonda(){
             if (Rondas.Count >= 3) throw new InvalidOperationException("Una mano de truco solo tiene 3 Rondas");

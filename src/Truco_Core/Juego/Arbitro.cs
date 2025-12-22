@@ -22,12 +22,12 @@ namespace Truco.Core.Juego
             if (estadoMano != EstadoMano.EsperandoMano)
                 throw new InvalidOperationException("No es momento de iniciar una mano");
             
-            var JMano = partida.JugadorMano;
-            var JPie = partida.JugadorPie;
-
             var mazo = new Mazo();
             mazo.Barajar();
             partida.SumarMano();
+
+            var JMano = partida.JugadorMano;
+            var JPie = partida.JugadorPie;
 
             JMano.LimpiarCartas();
             JPie.LimpiarCartas();
@@ -176,6 +176,7 @@ namespace Truco.Core.Juego
 
                 ganador.SumarPuntos(puntos);
             }
+            partida.ManoActual.ResolverEnvido();
             partida.CambiarTurno();
             estadoMano = EstadoMano.EnJuego;
         }
@@ -259,7 +260,9 @@ namespace Truco.Core.Juego
                 throw new InvalidOperationException("No es tu turno");
 
             var puntos = Operador.SumaDeTruco(partida.ManoActual!.SecuenciaTruco);
-
+            if(partida.ManoActual.SecuenciaEnvido.Count == 0)
+                puntos++;
+                
             var ganador = jugador == partida.Jugador1
                 ? partida.Jugador2
                 : partida.Jugador1;
@@ -325,10 +328,15 @@ namespace Truco.Core.Juego
                 _ => false
             };
         }
-        
+
         public bool PuedeCantarEnvido => (estadoMano == EstadoMano.EnJuego
                                         || estadoMano == EstadoMano.EsperandoRespuestaEnvido
-                                        || (estadoMano == EstadoMano.EsperandoRespuestaTruco && !partida.ManoActual!.RondaActual!.RondaCompleta())) && !partida.ManoActual.SecuenciaEnvido.Any(c => c.Tipo == TipoEnvido.FaltaEnvido);
+                                        || (estadoMano == EstadoMano.EsperandoRespuestaTruco
+                                        && !partida.ManoActual!.RondaActual!.RondaCompleta()))
+                                        && !partida.ManoActual.SecuenciaEnvido.Any(c => c.Tipo == TipoEnvido.FaltaEnvido)
+                                        && !partida.ManoActual.EnvidoResuelto
+                                        && !partida.ManoActual.SecuenciaTruco.Any(c => c.Tipo == TipoTruco.Retruco)
+                                        && !partida.ManoActual.SecuenciaTruco.Any(c => c.Tipo == TipoTruco.ValeCuatro);
         public bool PuedeCantarFlor
         {
             get
@@ -352,7 +360,9 @@ namespace Truco.Core.Juego
             }
         }
         public bool PuedeJugarCarta => estadoMano == Arbitro.EstadoMano.EnJuego;
-        public bool PuedeCantarTruco => estadoMano == Arbitro.EstadoMano.EnJuego;
+        public bool PuedeCantarTruco => (estadoMano == Arbitro.EstadoMano.EnJuego
+                                        || estadoMano == EstadoMano.EsperandoRespuestaTruco)
+                                        && !partida.ManoActual.SecuenciaTruco.Any(c => c.Tipo == TipoTruco.ValeCuatro);
         public bool PuedeResponderTruco => estadoMano == Arbitro.EstadoMano.EsperandoRespuestaTruco;
         public bool PuedeResponderEnvido => estadoMano == Arbitro.EstadoMano.EsperandoRespuestaEnvido;
         public bool PuedeResponderFlor => estadoMano == EstadoMano.EsperandoRespuestaFlor;
