@@ -120,6 +120,8 @@ namespace Truco.Core.Juego
         {
             if (!PuedeCantarEnvido)
                 throw new InvalidOperationException("No se puede cantar envido ahora");
+            if (partida.ManoActual.SecuenciaEnvido.Where(c => c.Tipo == TipoEnvido.Envido).Count() >= 2 && tipo == TipoEnvido.Envido)
+                throw new InvalidOperationException("El canto debe ser Real envido o Falta envido");
             if (jugador != partida.TurnoActual)
                 throw new InvalidOperationException("No es tu turno");
             if (partida.ManoActual!.RondaActual!.RondaCompleta())
@@ -324,9 +326,9 @@ namespace Truco.Core.Juego
             };
         }
         
-        public bool PuedeCantarEnvido => estadoMano == EstadoMano.EnJuego
+        public bool PuedeCantarEnvido => (estadoMano == EstadoMano.EnJuego
                                         || estadoMano == EstadoMano.EsperandoRespuestaEnvido
-                                        || (estadoMano == EstadoMano.EsperandoRespuestaTruco && !partida.ManoActual!.RondaActual!.RondaCompleta());
+                                        || (estadoMano == EstadoMano.EsperandoRespuestaTruco && !partida.ManoActual!.RondaActual!.RondaCompleta())) && !partida.ManoActual.SecuenciaEnvido.Any(c => c.Tipo == TipoEnvido.FaltaEnvido);
         public bool PuedeCantarFlor
         {
             get

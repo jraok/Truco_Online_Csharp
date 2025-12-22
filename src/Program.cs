@@ -44,9 +44,9 @@ var ganador = partida.Jugador1.Puntaje >= partida.PuntosPartida
     : partida.Jugador2;
 
 Console.ForegroundColor = ConsoleColor.Yellow;
-Console.WriteLine("\n╔════════════════════════════════════╗");
-Console.WriteLine($"║    🏆 GANADOR: {ganador.Nombre,-18}║");
-Console.WriteLine("╚════════════════════════════════════╝");
+Console.WriteLine("\n════════════════════════════════════");
+Console.WriteLine($"    🏆 GANADOR: {ganador.Nombre,-18}");
+Console.WriteLine("════════════════════════════════════");
 Console.ResetColor();
 Console.WriteLine($"\nPuntaje final:");
 Console.WriteLine($"  {partida.Jugador1.Nombre}: {partida.Jugador1.Puntaje}");
