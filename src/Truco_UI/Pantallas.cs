@@ -2,10 +2,9 @@ using Truco.Core.Juego;
 using Truco.Core.Modelos;
 namespace Truco.UI
 {
-    public class Pantallas(Arbitro arbitro)
+    public class Pantallas(Arbitro arbi)
     {
-        private Arbitro arbitro = arbitro;
-        public static void MostarTitulo()
+        public void Titulo()
         {
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.Cyan;
@@ -26,52 +25,92 @@ namespace Truco.UI
             Console.WriteLine("2. Reglas");
             Console.WriteLine("3. Salir");
         }
-        public static void JugarPartida()
+        public void EncabezadoMano()
         {
-
+            Console.WriteLine($"\n{'─', 50}");
+            Console.WriteLine($"MANO #{arbi.Partida.ManosJugadas}");
+            Console.WriteLine($"Mano: {arbi.Partida.JugadorMano.Nombre} | Pie: {arbi.Partida.JugadorPie.Nombre}");
+            Console.WriteLine($"{'─', 50}\n");
         }
-        static void MostrarOpciones(Arbitro arbitro)
+        public void Opciones()
         {
             Console.WriteLine("\nOpciones:");
 
-            if (arbitro.PuedeJugarCarta)
+            if (arbi.PuedeJugarCarta)
                 Console.WriteLine("  [c]  Jugar carta");
 
-            if (arbitro.PuedeCantarTruco)
+            if (arbi.PuedeCantarTruco)
                 Console.WriteLine("  [t]  Cantar Truco");
 
-            if (arbitro.PuedeResponderTruco)
+            if (arbi.PuedeResponderTruco)
                 Console.WriteLine("  [rt] Responder Truco");
 
-            if (arbitro.PuedeCantarEnvido)
+            if (arbi.PuedeCantarEnvido)
                 Console.WriteLine("  [e]  Cantar Envido");
 
-            if (arbitro.PuedeResponderEnvido)
+            if (arbi.PuedeResponderEnvido)
                 Console.WriteLine("  [re] Responder Envido");
 
-            if (arbitro.PuedeIrAlMazo)
+            if (arbi.PuedeIrAlMazo)
                 Console.WriteLine("  [m]  Irse al mazo");
 
             Console.Write("\nElegí una opción: ");
         }
-        public static void MostrarCartasEnMano(List<Carta> cartas)
+        public void CartasEnMano(Jugador jugador)
         {
             Console.WriteLine("Cartas en mano:");
-            for (int i = 0; i < cartas.Count; i++)
+            for (int i = 0; i < jugador.Cartas.Count; i++)
             {
                 Console.Write($"\t[{i}].");
-                Console.ForegroundColor = ColorPorPalo(cartas[i].Palo);
-                Console.WriteLine(cartas[i].Nombre);
+                Console.ForegroundColor = ColorPorPalo(jugador.Cartas[i].Palo);
+                Console.WriteLine(jugador.Cartas[i].Nombre);
                 Console.ResetColor();
             }
         }
-        public static void MostrarPuntaje(Arbitro arbitro)
+        public void Puntajes()
         {
-            Console.WriteLine("Puntajes");
-            Console.WriteLine("------------------------------------------------");
-            Console.WriteLine($"{arbitro.Partida.JugadorMano.Nombre}: {arbitro.Partida.JugadorMano.Puntaje} ");
-            Console.WriteLine($"{arbitro.Partida.JugadorPie.Nombre}: {arbitro.Partida.JugadorPie.Puntaje} ");
-            Console.WriteLine("------------------------------------------------");
+            Console.WriteLine("\n┌─────────── PUNTAJES ───────────┐");
+            Console.WriteLine($"│ {arbi.Partida.Jugador1.Nombre,-15} {arbi.Partida.Jugador1.Puntaje,3} pts │");
+            Console.WriteLine($"│ {arbi.Partida.Jugador2.Nombre,-15} {arbi.Partida.Jugador2.Puntaje,3} pts │");
+            Console.WriteLine("└─────────────────────────────────┘");
+        }
+        public void MostrarTurnoActual()
+        {
+                var turno = arbi.Partida.TurnoActual;
+            Console.WriteLine($"\n>> TURNO DE {turno?.Nombre.ToUpper()}");
+        }
+        public void MostrarRondaActual()
+        {
+            var ronda = arbi.Partida.ManoActual?.RondaActual;
+            if (ronda == null || ronda.Turnos.Count == 0) return;
+
+            Console.WriteLine($"\nRonda {ronda.Numero}:");
+            foreach (var turno in ronda.Turnos)
+            {
+                Console.Write($"  {turno.Jugador}: ");
+                Console.ForegroundColor = ColorPorPalo(turno.CartaJugada.Palo);
+                Console.WriteLine(turno.CartaJugada.Nombre);
+                Console.ResetColor();
+            }
+        }
+        public void MostrarMensaje(string mensaje)
+        {
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine($"\n→ {mensaje}");
+            Console.ResetColor();
+        }
+        public void MostrarEnvidos()
+        {
+            Console.WriteLine($"\nTantos: {arbi.Partida.Jugador1.Nombre} {arbi.Partida.Jugador1.PuntosEnvido} | {arbi.Partida.Jugador2.Nombre} {arbi.Partida.Jugador2.PuntosEnvido}");
+        }
+        public void MostrarFlores()
+        {
+            Console.WriteLine($"\nTantos: {arbi.Partida.Jugador1.Nombre} {arbi.Partida.Jugador1.PuntosFlor} | {arbi.Partida.Jugador2.Nombre} {arbi.Partida.Jugador2.PuntosFlor}");
+        }
+        public void EsperarTecla(string mensaje = "Presioná cualquier tecla para continuar...")
+        {
+            Console.WriteLine($"\n{mensaje}");
+            Console.ReadKey();
         }
         private static ConsoleColor ColorPorPalo(Palos palo)
         {
@@ -84,6 +123,6 @@ namespace Truco.UI
                 _ => ConsoleColor.White
             };
         }
-
+        
     }
 }

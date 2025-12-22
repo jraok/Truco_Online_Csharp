@@ -86,13 +86,13 @@ namespace Truco.Core.Reglas
                 _ => 1,
             };
         }
-        public static int SumaDeFlor(List<CantoFlor> cantos, int resto){
+        public static int SumaDeFlor(List<CantoFlor> cantos){
             if (!cantos.Any()) return 0;
             return cantos.Last().Tipo switch
             {
                 TipoFlor.Flor => 3,
                 TipoFlor.ContraFlor => 6,
-                TipoFlor.ContraFlorResto => resto,
+                TipoFlor.ContraFlorResto => 30,
                 _ => 0,
             };
         }

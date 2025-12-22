@@ -12,4 +12,3 @@ namespace Truco.Core.Reglas
         public string Jugador { get; private set; } = jugador;
     }
 }
-    

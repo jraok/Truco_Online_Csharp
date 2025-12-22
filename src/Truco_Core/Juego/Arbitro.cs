@@ -11,8 +11,7 @@ namespace Truco.Core.Juego
             EnJuego,
             EsperandoRespuestaTruco,
             EsperandoRespuestaEnvido,
-            EsperandoRespuestaFlor,
-            Terminada
+            EsperandoRespuestaFlor
         }
         private readonly Partida partida = new(nombreJ1, nombreJ2);
         public Partida Partida => partida;
@@ -146,8 +145,8 @@ namespace Truco.Core.Juego
             if (nombreJugador != partida.TurnoActual!.Nombre)
                 throw new InvalidOperationException("No es tu turno");
 
-            var ultimoCanto = partida.ManoActual!.SecuenciaEnvido.Last();
-
+            var ultimoCanto = partida.ManoActual.SecuenciaEnvido.LastOrDefault() 
+                ?? throw new InvalidOperationException("No hay envido para responder (estado inconsistente)");
             var resto = Operador.CalcularResto(partida.Jugador1, partida.Jugador2, partida.PuntosPartida);
 
             if (acepta)
@@ -198,17 +197,31 @@ namespace Truco.Core.Juego
         }
         public void ResponderFlor(string nombreJugador, bool acepta)
         {
-            if (estadoMano != EstadoMano.EsperandoRespuestaFlor)
+            if (!PuedeResponderFlor)
                 throw new InvalidOperationException("No hay flor para responder");
-            
             if (nombreJugador != partida.TurnoActual!.Nombre)
                 throw new InvalidOperationException("No es tu turno");
+            if (Operador.CalcularFlor(partida.TurnoActual.Cartas) == 0)
+            {
+                var ultimo = partida.ManoActual.SecuenciaFlor.Last();
+                var ganador = ultimo.Jugador == partida.Jugador1.Nombre
+                    ? partida.Jugador1
+                    : partida.Jugador2;
 
-            var ultimoCanto = partida.ManoActual!.SecuenciaFlor.Last();
-            var resto = Operador.CalcularResto(partida.Jugador1, partida.Jugador2, partida.PuntosPartida);
+                var puntos = Operador.SumaDeFlor(partida.ManoActual.SecuenciaFlor);
+                ganador.SumarPuntos(puntos);
+
+                partida.CambiarTurno();
+                estadoMano = EstadoMano.EnJuego;
+                return;
+            }
+
+            var ultimoCanto = partida.ManoActual.SecuenciaFlor.LastOrDefault() 
+                ?? throw new InvalidOperationException("No hay flor para responder (estado inconsistente)");
+
             if (acepta)
             {
-                var puntos = Operador.SumaDeFlor(partida.ManoActual.SecuenciaFlor, resto);
+                var puntos = Operador.SumaDeFlor(partida.ManoActual.SecuenciaFlor);
 
                 var florJ1 = partida.Jugador1.PuntosFlor;
                 var florJ2 = partida.Jugador2.PuntosFlor;
@@ -224,7 +237,7 @@ namespace Truco.Core.Juego
                     .Take(partida.ManoActual.SecuenciaFlor.Count - 1)
                     .ToList();
 
-                var puntos = Operador.SumaDeFlor(cantosPrevios, 0);
+                var puntos = Operador.SumaDeFlor(cantosPrevios);
 
                 var ganador = ultimoCanto.Jugador == partida.Jugador1.Nombre
                     ? partida.Jugador1
@@ -322,7 +335,7 @@ namespace Truco.Core.Juego
                     return false;
                 bool esMomento = estadoMano == EstadoMano.EnJuego || estadoMano == EstadoMano.EsperandoRespuestaEnvido;
                 bool estaCompletaRonda = partida.ManoActual.Rondas.Count > 1 || partida.ManoActual.RondaActual!.RondaCompleta();
-                bool tieneFlor = Operador.CalcularFlor(partida.TurnoActual!.Cartas) == 0;
+                bool tieneFlor = Operador.CalcularFlor(partida.TurnoActual!.Cartas) != 0;
             
                 if (!esMomento || estaCompletaRonda || !tieneFlor)
                     return false;
@@ -340,6 +353,7 @@ namespace Truco.Core.Juego
         public bool PuedeCantarTruco => estadoMano == Arbitro.EstadoMano.EnJuego;
         public bool PuedeResponderTruco => estadoMano == Arbitro.EstadoMano.EsperandoRespuestaTruco;
         public bool PuedeResponderEnvido => estadoMano == Arbitro.EstadoMano.EsperandoRespuestaEnvido;
+        public bool PuedeResponderFlor => estadoMano == EstadoMano.EsperandoRespuestaFlor;
         public bool PuedeIrAlMazo => estadoMano == Arbitro.EstadoMano.EnJuego;
     }
 
