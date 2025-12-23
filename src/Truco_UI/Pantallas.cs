@@ -62,10 +62,10 @@ namespace Truco.UI
         }
         public void CartasEnMano(Jugador jugador)
         {
-            Console.WriteLine("Cartas en mano:");
+            Console.WriteLine("\nCartas en mano:");
             for (int i = 0; i < jugador.Cartas.Count; i++)
             {
-                Console.Write($"  [{i}].");
+                Console.Write($"  [{i}].  ");
                 Console.ForegroundColor = ColorPorPalo(jugador.Cartas[i].Palo);
                 Console.WriteLine(jugador.Cartas[i].Nombre);
                 Console.ResetColor();

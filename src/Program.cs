@@ -14,7 +14,7 @@ pantallas.EsperarTecla();
 while (partida.Jugador1.Puntaje < partida.PuntosPartida && partida.Jugador2.Puntaje < partida.PuntosPartida)
 {
     arbitro.IniciarMano();
-    while(!partida.ManoActual.Finalizada){
+    while(!partida.ManoActual.Finalizada && partida.Jugador1.Puntaje < partida.PuntosPartida && partida.Jugador2.Puntaje < partida.PuntosPartida){
         Console.Clear();
         pantallas.EncabezadoMano();
         pantallas.MostrarCantosPendientes();
@@ -65,7 +65,7 @@ static void ProcesarOpcion(string opcion, Arbitro arbitro, Pantallas pantallas)
             var idx = int.Parse(Console.ReadLine() ?? "0");
             arbitro.JugarCarta(jugador, idx);
             pantallas.MostrarMensaje($"{jugador.Nombre} jugó una carta");
-            Thread.Sleep(800);
+            Thread.Sleep(1800);
             break;
         
         case "t":
@@ -74,7 +74,7 @@ static void ProcesarOpcion(string opcion, Arbitro arbitro, Pantallas pantallas)
             var tipoTruco = int.Parse(Console.ReadLine() ?? "1");
             arbitro.CantarTruco(jugador, (TipoTruco)(tipoTruco - 1));   
             pantallas.MostrarMensaje($"{jugador.Nombre} cantó {(TipoTruco)(tipoTruco - 1)}!");
-            Thread.Sleep(800);
+            Thread.Sleep(1800);
             break;
         
         case "rt":
@@ -82,7 +82,7 @@ static void ProcesarOpcion(string opcion, Arbitro arbitro, Pantallas pantallas)
             var aceptaTruco = Console.ReadLine()?.ToLower() == "s";
             arbitro.ResponderTruco(jugador, aceptaTruco);
             pantallas.MostrarMensaje($"{jugador.Nombre} {(aceptaTruco ? "QUIERO" : "NO QUIERO")}");
-            Thread.Sleep(800);
+            Thread.Sleep(1800);
             break;
         
         case "e":
@@ -91,7 +91,7 @@ static void ProcesarOpcion(string opcion, Arbitro arbitro, Pantallas pantallas)
             var tipoEnvido = int.Parse(Console.ReadLine() ?? "1");
             arbitro.CantarEnvido(jugador, (TipoEnvido)(tipoEnvido - 1));
             pantallas.MostrarMensaje($"{jugador.Nombre} cantó {(TipoEnvido)(tipoEnvido - 1)}!");
-            Thread.Sleep(800);
+            Thread.Sleep(1800);
             break;
         
         case "re":
@@ -100,7 +100,7 @@ static void ProcesarOpcion(string opcion, Arbitro arbitro, Pantallas pantallas)
             arbitro.ResponderEnvido(jugador, aceptaEnvido);
             pantallas.MostrarMensaje($"{jugador.Nombre} {(aceptaEnvido ? "QUIERO" : "NO QUIERO")}");
             if (aceptaEnvido) pantallas.MostrarEnvidos();
-            Thread.Sleep(1500);
+            Thread.Sleep(2500);
             break;
 
         // case "f":
@@ -124,7 +124,7 @@ static void ProcesarOpcion(string opcion, Arbitro arbitro, Pantallas pantallas)
         case "m":
             arbitro.IrAlMazo(jugador);
             pantallas.MostrarMensaje($"{jugador.Nombre} se fue al mazo");
-            Thread.Sleep(800);
+            Thread.Sleep(1800);
             break;
         
         default:

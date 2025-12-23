@@ -112,7 +112,10 @@ namespace Truco.Core.Juego
                 partida.ManoActual.FinalizarMano();
                 estadoMano = EstadoMano.EsperandoMano;
             }else{
-                partida.CambiarTurno();
+                if (partida.ManoActual?.RondaActual == null || partida.ManoActual?.RondaActual.Turnos.Count == 0)
+                    partida.AsignarTurno(partida.JugadorMano);
+                else
+                    partida.AsignarTurno(partida.JugadorPie);
                 estadoMano = EstadoMano.EnJuego;
             }
         }
@@ -170,6 +173,7 @@ namespace Truco.Core.Juego
                     .ToList();
 
                 var puntos = Operador.SumaDeEnvido(cantosPrevios, 0);
+                if (puntos == 0) puntos++;
                 var ganador = ultimoCanto.Jugador == partida.Jugador1.Nombre
                     ? partida.Jugador1
                     : partida.Jugador2;
@@ -177,7 +181,10 @@ namespace Truco.Core.Juego
                 ganador.SumarPuntos(puntos);
             }
             partida.ManoActual.ResolverEnvido();
-            partida.CambiarTurno();
+            if (partida.ManoActual?.RondaActual == null || partida.ManoActual?.RondaActual.Turnos.Count == 0)
+                partida.AsignarTurno(partida.JugadorMano);
+            else
+            partida.AsignarTurno(partida.JugadorPie);
             estadoMano = EstadoMano.EnJuego;
         }
         // public void CantarFlor(Jugador jugador, TipoFlor tipo)
@@ -260,7 +267,7 @@ namespace Truco.Core.Juego
                 throw new InvalidOperationException("No es tu turno");
 
             var puntos = Operador.SumaDeTruco(partida.ManoActual!.SecuenciaTruco);
-            if(partida.ManoActual.SecuenciaEnvido.Count == 0)
+            if(!partida.ManoActual.EnvidoResuelto && partida.ManoActual.Rondas.Count == 1)
                 puntos++;
                 
             var ganador = jugador == partida.Jugador1
@@ -328,7 +335,6 @@ namespace Truco.Core.Juego
         //         _ => false
         //     };
         // }
-
         public bool PuedeCantarEnvido => (estadoMano == EstadoMano.EnJuego
                                         || estadoMano == EstadoMano.EsperandoRespuestaEnvido
                                         || (estadoMano == EstadoMano.EsperandoRespuestaTruco
