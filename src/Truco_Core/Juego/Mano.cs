@@ -8,7 +8,7 @@ namespace Truco.Core.Juego
         public List<String> RegistroGanadores { get; private set; } = new();
         public List<CantoEnvido> SecuenciaEnvido { get; private set; }= new();
         public List<CantoTruco> SecuenciaTruco { get; private set; }= new();
-        public List<CantoFlor> SecuenciaFlor { get; private set; }= new();
+        // public List<CantoFlor> SecuenciaFlor { get; private set; }= new();
         public Jugador JugadorMano { get; private set; } = jugadorMano;
         public Jugador JugadorPie { get; private set; } = jugadorPie;
         public Ronda? RondaActual => Rondas.LastOrDefault();
@@ -62,8 +62,8 @@ namespace Truco.Core.Juego
         public void AgregarCanto(TipoTruco truco, string jugador){
             SecuenciaTruco.Add(new CantoTruco(truco,jugador));
         }
-        public void AgregarCanto(TipoFlor flor,string jugador){
-            SecuenciaFlor.Add(new CantoFlor(flor,jugador));
-        }
+        // public void AgregarCanto(TipoFlor flor,string jugador){
+        //     SecuenciaFlor.Add(new CantoFlor(flor,jugador));
+        // }
     }
 }

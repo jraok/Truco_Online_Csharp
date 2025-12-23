@@ -49,11 +49,11 @@ namespace Truco.UI
             if (arbi.PuedeResponderEnvido)
                 Console.WriteLine("  [re] Responder Envido");
 
-            if (arbi.PuedeCantarFlor)
-                Console.WriteLine("  [f]  Cantar Flor");
+            // if (arbi.PuedeCantarFlor)
+            //     Console.WriteLine("  [f]  Cantar Flor");
 
-            if (arbi.PuedeResponderFlor)
-                Console.WriteLine("  [rf] Responder Flor");
+            // if (arbi.PuedeResponderFlor)
+            //     Console.WriteLine("  [rf] Responder Flor");
 
             if (arbi.PuedeIrAlMazo)
                 Console.WriteLine("  [m]  Irse al mazo");
@@ -121,9 +121,48 @@ namespace Truco.UI
         {
             Console.WriteLine($"\nTantos: {arbi.Partida.Jugador1.Nombre} {arbi.Partida.Jugador1.PuntosEnvido} | {arbi.Partida.Jugador2.Nombre} {arbi.Partida.Jugador2.PuntosEnvido}");
         }
-        public void MostrarFlores()
+        // public void MostrarFlores()
+        // {
+        //     Console.WriteLine($"\nTantos: {arbi.Partida.Jugador1.Nombre} {arbi.Partida.Jugador1.PuntosFlor} | {arbi.Partida.Jugador2.Nombre} {arbi.Partida.Jugador2.PuntosFlor}");
+        // }
+        public void MostrarCantosPendientes()
         {
-            Console.WriteLine($"\nTantos: {arbi.Partida.Jugador1.Nombre} {arbi.Partida.Jugador1.PuntosFlor} | {arbi.Partida.Jugador2.Nombre} {arbi.Partida.Jugador2.PuntosFlor}");
+            var mano = arbi.Partida.ManoActual;
+            if (mano == null) return;
+
+            bool hayCantos = false;
+
+            if (arbi.PuedeResponderTruco && mano.SecuenciaTruco.Count != 0)
+            {
+                var ultimoTruco = mano.SecuenciaTruco.Last();
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine($"{ultimoTruco.Jugador} cantó {ultimoTruco.Tipo}");
+                Console.ResetColor();
+                hayCantos = true;
+            }
+
+            if (arbi.PuedeResponderEnvido && mano.SecuenciaEnvido.Count != 0)
+            {
+                var ultimoEnvido = mano.SecuenciaEnvido.Last();
+                var puntosAcumulados = mano.SecuenciaEnvido.Count > 1 
+                    ? $" (Total: {mano.SecuenciaEnvido.Count} cantos)" 
+                    : "";
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Console.WriteLine($"{ultimoEnvido.Jugador} cantó {ultimoEnvido.Tipo}{puntosAcumulados}");
+                Console.ResetColor();
+                hayCantos = true;
+            }
+
+            // if (arbi.PuedeResponderFlor && mano.SecuenciaFlor.Count != 0)
+            // {
+            //     var ultimaFlor = mano.SecuenciaFlor.Last();
+            //     Console.ForegroundColor = ConsoleColor.Green;
+            //     Console.WriteLine($"{ultimaFlor.Jugador} cantó {ultimaFlor.Tipo}");
+            //     Console.ResetColor();
+            //     hayCantos = true;
+            // }
+
+            if (hayCantos) Console.WriteLine();
         }
         public void EsperarTecla(string mensaje = "Presioná cualquier tecla para continuar...")
         {

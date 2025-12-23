@@ -17,6 +17,7 @@ while (partida.Jugador1.Puntaje < partida.PuntosPartida && partida.Jugador2.Punt
     while(!partida.ManoActual.Finalizada){
         Console.Clear();
         pantallas.EncabezadoMano();
+        pantallas.MostrarCantosPendientes();
         pantallas.MostrarTurnoActual();
         pantallas.MostrarManoActual();
         pantallas.CartasEnMano(partida.TurnoActual);
@@ -102,23 +103,23 @@ static void ProcesarOpcion(string opcion, Arbitro arbitro, Pantallas pantallas)
             Thread.Sleep(1500);
             break;
 
-        case "f":
-            Console.WriteLine("\n1. Flor \n2. Contra Flor\n3. Contra Flor al Resto");
-            Console.Write("Elegí: ");
-            var tipoFlor = int.Parse(Console.ReadLine() ?? "1");
-            arbitro.CantarFlor(jugador, (TipoFlor)(tipoFlor - 1));
-            pantallas.MostrarMensaje($"{jugador.Nombre} cantó {(TipoFlor)(tipoFlor - 1)}!");
-            Thread.Sleep(800);
-            break;
+        // case "f":
+        //     Console.WriteLine("\n1. Flor \n2. Contra Flor\n3. Contra Flor al Resto");
+        //     Console.Write("Elegí: ");
+        //     var tipoFlor = int.Parse(Console.ReadLine() ?? "1");
+        //     arbitro.CantarFlor(jugador, (TipoFlor)(tipoFlor - 1));
+        //     pantallas.MostrarMensaje($"{jugador.Nombre} cantó {(TipoFlor)(tipoFlor - 1)}!");
+        //     Thread.Sleep(800);
+        //     break;
 
-        case "rf":
-            Console.Write("¿Aceptás la flor? (s/n): ");
-            var aceptaFlor = Console.ReadLine()?.ToLower() == "s";
-            arbitro.ResponderFlor(jugador, aceptaFlor);
-            pantallas.MostrarMensaje($"{jugador.Nombre} {(aceptaFlor ? "QUIERO" : "NO QUIERO")}");
-            if (aceptaFlor) pantallas.MostrarFlores();
-            Thread.Sleep(1500);
-            break;
+        // case "rf":
+        //     Console.Write("¿Aceptás la flor? (s/n): ");
+        //     var aceptaFlor = Console.ReadLine()?.ToLower() == "s";
+        //     arbitro.ResponderFlor(jugador, aceptaFlor);
+        //     pantallas.MostrarMensaje($"{jugador.Nombre} {(aceptaFlor ? "QUIERO" : "NO QUIERO")}");
+        //     if (aceptaFlor) pantallas.MostrarFlores();
+        //     Thread.Sleep(1500);
+        //     break;
 
         case "m":
             arbitro.IrAlMazo(jugador);

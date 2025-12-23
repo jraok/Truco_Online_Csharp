@@ -61,11 +61,11 @@ namespace Truco.Core.Reglas
             if (puntos == 0) puntos = cartas.Max(c => ValorCarta(c));
             return puntos;
         }
-        public static int CalcularFlor(IReadOnlyList<Carta> cartas){
-            if (cartas[0].Palo == cartas[1].Palo && cartas[1].Palo == cartas[2].Palo)
-            return (cartas.Sum(c => c.Numero >= 10 ? 0 : c.Numero) + BonusEnvido);
-            else return 0;
-        }
+        // public static int CalcularFlor(IReadOnlyList<Carta> cartas){
+        //     if (cartas[0].Palo == cartas[1].Palo && cartas[1].Palo == cartas[2].Palo)
+        //     return (cartas.Sum(c => c.Numero >= 10 ? 0 : c.Numero) + BonusEnvido);
+        //     else return 0;
+        // }
         public static int SumaDeEnvido(List<CantoEnvido> cantos, int resto){
             if (!cantos.Any()) return 0; 
             if (cantos.Last().Tipo == TipoEnvido.FaltaEnvido) return resto;
@@ -86,15 +86,15 @@ namespace Truco.Core.Reglas
                 _ => 1,
             };
         }
-        public static int SumaDeFlor(List<CantoFlor> cantos){
-            if (!cantos.Any()) return 0;
-            return cantos.Last().Tipo switch
-            {
-                TipoFlor.Flor => 3,
-                TipoFlor.ContraFlor => 6,
-                TipoFlor.ContraFlorResto => 30,
-                _ => 0,
-            };
-        }
+        // public static int SumaDeFlor(List<CantoFlor> cantos){
+        //     if (!cantos.Any()) return 0;
+        //     return cantos.Last().Tipo switch
+        //     {
+        //         TipoFlor.Flor => 3,
+        //         TipoFlor.ContraFlor => 6,
+        //         TipoFlor.ContraFlorResto => 30,
+        //         _ => 0,
+        //     };
+        // }
     }
 }
