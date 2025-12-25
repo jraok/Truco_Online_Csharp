@@ -278,7 +278,6 @@ namespace Truco.Core.Juego
             partida.ManoActual.FinalizarMano();
             estadoMano = EstadoMano.EsperandoMano;
         }
-
         private void ResolverGanadorRonda()
         {
             var ronda = partida.ManoActual!.RondaActual!;
@@ -366,9 +365,26 @@ namespace Truco.Core.Juego
         //     }
         // }
         public bool PuedeJugarCarta => estadoMano == Arbitro.EstadoMano.EnJuego;
-        public bool PuedeCantarTruco => (estadoMano == Arbitro.EstadoMano.EnJuego
-                                        || estadoMano == EstadoMano.EsperandoRespuestaTruco)
-                                        && !partida.ManoActual.SecuenciaTruco.Any(c => c.Tipo == TipoTruco.ValeCuatro);
+        public bool PuedeCantarTruco
+        {
+                get
+            {
+                if (estadoMano != EstadoMano.EnJuego && estadoMano != EstadoMano.EsperandoRespuestaTruco)
+                    return false;
+
+                if (partida.ManoActual.SecuenciaTruco.Any(c => c.Tipo == TipoTruco.ValeCuatro))
+                    return false;
+
+                var rondaActual = partida.ManoActual?.RondaActual;
+                if (rondaActual != null && rondaActual.Numero == 3 && rondaActual.Turnos.Count == 1)
+                {
+                    var primeraCarta = rondaActual.Turnos[0].CartaJugada;
+                    if (primeraCarta.Numero == 4)
+                        return false;
+                }
+                return true;
+            }
+        }
         public bool PuedeResponderTruco => estadoMano == Arbitro.EstadoMano.EsperandoRespuestaTruco;
         public bool PuedeResponderEnvido => estadoMano == Arbitro.EstadoMano.EsperandoRespuestaEnvido;
         // public bool PuedeResponderFlor => estadoMano == EstadoMano.EsperandoRespuestaFlor;
