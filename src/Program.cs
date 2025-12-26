@@ -2,12 +2,17 @@ using Truco.Core.Reglas;
 using Truco.Core.Juego;
 using Truco.UI;
 
-var arbitro = new Arbitro("Juan", "Pedro");
-var pantallas = new Pantallas(arbitro);
+Pantallas.Titulo();
+
+string nombreJ1 = LeerNombreJugador("Nombre del Jugador 1 (Mano inicial): ", "Jugador 1");
+string nombreJ2 = LeerNombreJugador("Nombre del Jugador 2 (Mano inicial): ", "Jugador 2");
+
+var pantallas = new Pantallas();
+var arbitro = new Arbitro(nombreJ1, nombreJ2);
+pantallas.GuardarArbitro(arbitro);
 var partida = arbitro.Partida;
 
-pantallas.Titulo();
-Console.WriteLine($"Partida: {partida.Jugador1.Nombre} vs {partida.Jugador2.Nombre}");
+Console.WriteLine($"\nPartida: {partida.Jugador1.Nombre} vs {partida.Jugador2.Nombre}");
 Console.WriteLine($"Puntos para ganar: {partida.PuntosPartida}");
 pantallas.EsperarTecla();
 
@@ -33,7 +38,7 @@ while (partida.Jugador1.Puntaje < partida.PuntosPartida && partida.Jugador2.Punt
         catch (Exception ex)
         {
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine($"\n❌ Error: {ex.Message}");
+            Console.WriteLine($"\nError: {ex.Message}");
             Console.ResetColor();
             pantallas.EsperarTecla();
         }
@@ -41,7 +46,7 @@ while (partida.Jugador1.Puntaje < partida.PuntosPartida && partida.Jugador2.Punt
 }
 
 Console.Clear();
-pantallas.Titulo();
+Pantallas.Titulo();
 var ganador = partida.Jugador1.Puntaje >= partida.PuntosPartida 
     ? partida.Jugador1 
     : partida.Jugador2;
@@ -54,6 +59,39 @@ Console.ResetColor();
 Console.WriteLine($"\nPuntaje final:");
 Console.WriteLine($"  {partida.Jugador1.Nombre}: {partida.Jugador1.Puntaje}");
 Console.WriteLine($"  {partida.Jugador2.Nombre}: {partida.Jugador2.Puntaje}");
+
+static string LeerNombreJugador(string mensaje, string nombrePorDefecto)
+{
+    while (true)
+    {
+        Console.Write(mensaje);
+        var input = Console.ReadLine()?.Trim();
+        
+        if (string.IsNullOrWhiteSpace(input))
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine($"Usando nombre por defecto: {nombrePorDefecto}");
+            Console.ResetColor();
+            return nombrePorDefecto;
+        }
+                if (input.Length > 20)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("El nombre no puede tener más de 20 caracteres.");
+            Console.ResetColor();
+            continue;
+        }
+        
+        if (input.All(c => char.IsWhiteSpace(c) || char.IsPunctuation(c)))
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("El nombre debe contener al menos una letra o número.");
+            Console.ResetColor();
+            continue;
+        }
+        return input;
+    }
+}
 
 static int LeerNumero(string mensaje, int min, int max)
 {

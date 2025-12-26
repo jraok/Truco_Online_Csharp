@@ -2,9 +2,14 @@ using Truco.Core.Juego;
 using Truco.Core.Modelos;
 namespace Truco.UI
 {
-    public class Pantallas(Arbitro arbi)
+    public class Pantallas
     {
-        public void Titulo()
+        private Arbitro arbi;
+        public void GuardarArbitro(Arbitro arbi)
+        {
+            this.arbi = arbi;
+        }
+        public static void Titulo()
         {
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.Cyan;

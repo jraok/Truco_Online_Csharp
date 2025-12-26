@@ -10,8 +10,7 @@ namespace Truco.Core.Juego
             EsperandoMano,
             EnJuego,
             EsperandoRespuestaTruco,
-            EsperandoRespuestaEnvido,
-            // EsperandoRespuestaFlor
+            EsperandoRespuestaEnvido
         }
         private readonly Partida partida = new(nombreJ1, nombreJ2);
         public Partida Partida => partida;
@@ -322,18 +321,6 @@ namespace Truco.Core.Juego
                 _ => false
             };
         }
-        // private static bool FlorValida(TipoFlor nuevo, TipoFlor? anterior)
-        // {
-        //     if (anterior == null)
-        //         return nuevo == TipoFlor.Flor;
-
-        //     return anterior switch
-        //     {
-        //         TipoFlor.Flor => nuevo == TipoFlor.ContraFlor,
-        //         TipoFlor.ContraFlor => nuevo == TipoFlor.ContraFlorResto,
-        //         _ => false
-        //     };
-        // }
         public bool PuedeCantarEnvido => (estadoMano == EstadoMano.EnJuego
                                         || estadoMano == EstadoMano.EsperandoRespuestaEnvido
                                         || (estadoMano == EstadoMano.EsperandoRespuestaTruco
@@ -342,28 +329,6 @@ namespace Truco.Core.Juego
                                         && !partida.ManoActual.EnvidoResuelto
                                         && !partida.ManoActual.SecuenciaTruco.Any(c => c.Tipo == TipoTruco.Retruco)
                                         && !partida.ManoActual.SecuenciaTruco.Any(c => c.Tipo == TipoTruco.ValeCuatro);
-        // public bool PuedeCantarFlor
-        // {
-        //     get
-        //     {
-        //         if (partida.ManoActual == null)
-        //             return false;
-        //         bool esMomento = estadoMano == EstadoMano.EnJuego || estadoMano == EstadoMano.EsperandoRespuestaEnvido;
-        //         bool estaCompletaRonda = partida.ManoActual.Rondas.Count > 1 || partida.ManoActual.RondaActual!.RondaCompleta();
-        //         bool tieneFlor = partida.TurnoActual.PuntosFlor != 0;
-            
-        //         if (!esMomento || estaCompletaRonda || !tieneFlor)
-        //             return false;
-                
-        //         var ultimoCanto = partida.ManoActual.SecuenciaFlor.LastOrDefault();
-        //         if (ultimoCanto == null)
-        //             return true;
-
-        //         if (ultimoCanto.Jugador == partida.TurnoActual!.Nombre)
-        //             return false;
-        //         return true;
-        //     }
-        // }
         public bool PuedeJugarCarta => estadoMano == Arbitro.EstadoMano.EnJuego;
         public bool PuedeCantarTruco
         {
@@ -387,7 +352,6 @@ namespace Truco.Core.Juego
         }
         public bool PuedeResponderTruco => estadoMano == Arbitro.EstadoMano.EsperandoRespuestaTruco;
         public bool PuedeResponderEnvido => estadoMano == Arbitro.EstadoMano.EsperandoRespuestaEnvido;
-        // public bool PuedeResponderFlor => estadoMano == EstadoMano.EsperandoRespuestaFlor;
         public bool PuedeIrAlMazo => estadoMano == Arbitro.EstadoMano.EnJuego;
     }
 

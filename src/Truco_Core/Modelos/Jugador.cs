@@ -6,13 +6,11 @@ namespace Truco.Core.Modelos
         private readonly string nombre;
         private int puntaje;
         private int puntosEnvido = 0;
-        // private int puntosFlor = 0;
         private readonly List<Carta> cartas = new();
         
         public string Nombre => nombre;
         public int Puntaje => puntaje;
         public int PuntosEnvido => puntosEnvido;
-        // public int PuntosFlor => puntosFlor;
         public IReadOnlyList<Carta> Cartas => cartas.AsReadOnly();
 
         public Jugador(string nombre){
@@ -30,7 +28,6 @@ namespace Truco.Core.Modelos
             };
             this.cartas.AddRange(cartas);
             AsignarEnvido(Operador.CalcularEnvido(this.cartas));
-            // AsignarFlor(Operador.CalcularFlor(this.cartas));
         }
 
         public Carta TirarCarta(int indice){
@@ -44,9 +41,6 @@ namespace Truco.Core.Modelos
         private void AsignarEnvido(int puntos){
             puntosEnvido = puntos;
         }
-        // private void AsignarFlor(int puntos){
-        //     puntosFlor = puntos;
-        // }
         public void SumarPuntos(int puntos){
             puntaje += puntos;
         }
