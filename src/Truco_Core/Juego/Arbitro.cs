@@ -186,77 +186,6 @@ namespace Truco.Core.Juego
             partida.AsignarTurno(partida.JugadorPie);
             estadoMano = EstadoMano.EnJuego;
         }
-        // public void CantarFlor(Jugador jugador, TipoFlor tipo)
-        // {
-        //     if (!PuedeCantarFlor)
-        //         throw new InvalidOperationException("No es momento de cantar flor");
-        //     if (jugador != partida.TurnoActual)
-        //         throw new InvalidOperationException("No es tu turno");
-
-        //     var ultimo = partida.ManoActual.SecuenciaFlor.LastOrDefault();
-        //     if (!FlorValida(tipo, ultimo?.Tipo))
-        //         throw new InvalidOperationException("Canto de flor inválido");
-    
-        //     if (estadoMano == EstadoMano.EsperandoRespuestaEnvido)
-        //         partida.ManoActual.SecuenciaEnvido.Clear();
-
-        //     partida.ManoActual!.AgregarCanto(tipo, jugador.Nombre);
-        //     partida.CambiarTurno();
-        //     estadoMano = EstadoMano.EsperandoRespuestaFlor;
-        // }
-        // public void ResponderFlor(Jugador jugador, bool acepta)
-        // {
-        //     if (!PuedeResponderFlor)
-        //         throw new InvalidOperationException("No hay flor para responder");
-        //     if (jugador != partida.TurnoActual)
-        //         throw new InvalidOperationException("No es tu turno");
-        //     if (Operador.CalcularFlor(partida.TurnoActual.Cartas) == 0)
-        //     {
-        //         var ultimo = partida.ManoActual.SecuenciaFlor.Last();
-        //         var ganador = ultimo.Jugador == partida.Jugador1.Nombre
-        //             ? partida.Jugador1
-        //             : partida.Jugador2;
-
-        //         var puntos = Operador.SumaDeFlor(partida.ManoActual.SecuenciaFlor);
-        //         ganador.SumarPuntos(puntos);
-
-        //         partida.CambiarTurno();
-        //         estadoMano = EstadoMano.EnJuego;
-        //         return;
-        //     }
-
-        //     var ultimoCanto = partida.ManoActual.SecuenciaFlor.LastOrDefault() 
-        //         ?? throw new InvalidOperationException("No hay flor para responder (estado inconsistente)");
-
-        //     if (acepta)
-        //     {
-        //         var puntos = Operador.SumaDeFlor(partida.ManoActual.SecuenciaFlor);
-
-        //         var florJ1 = partida.Jugador1.PuntosFlor;
-        //         var florJ2 = partida.Jugador2.PuntosFlor;
-
-        //         if (florJ1 > florJ2)
-        //             partida.Jugador1.SumarPuntos(puntos);
-        //         else if (florJ2 > florJ1)
-        //             partida.Jugador2.SumarPuntos(puntos);
-        //         else
-        //             partida.ManoActual.JugadorMano.SumarPuntos(puntos);
-        //     }else{
-        //         var cantosPrevios = partida.ManoActual.SecuenciaFlor
-        //             .Take(partida.ManoActual.SecuenciaFlor.Count - 1)
-        //             .ToList();
-
-        //         var puntos = Operador.SumaDeFlor(cantosPrevios);
-
-        //         var ganador = ultimoCanto.Jugador == partida.Jugador1.Nombre
-        //             ? partida.Jugador1
-        //             : partida.Jugador2;
-
-        //         ganador.SumarPuntos(puntos);
-        //     }
-        //     partida.CambiarTurno();
-        //     estadoMano = EstadoMano.EnJuego;
-        // }
         public void IrAlMazo(Jugador jugador)
         {
             if (estadoMano != EstadoMano.EnJuego)
@@ -328,7 +257,8 @@ namespace Truco.Core.Juego
                                         && !partida.ManoActual.SecuenciaEnvido.Any(c => c.Tipo == TipoEnvido.FaltaEnvido)
                                         && !partida.ManoActual.EnvidoResuelto
                                         && !partida.ManoActual.SecuenciaTruco.Any(c => c.Tipo == TipoTruco.Retruco)
-                                        && !partida.ManoActual.SecuenciaTruco.Any(c => c.Tipo == TipoTruco.ValeCuatro);
+                                        && !partida.ManoActual.SecuenciaTruco.Any(c => c.Tipo == TipoTruco.ValeCuatro)
+                                        && partida.ManoActual.Rondas.Count == 1;
         public bool PuedeJugarCarta => estadoMano == Arbitro.EstadoMano.EnJuego;
         public bool PuedeCantarTruco
         {
