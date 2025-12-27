@@ -9,14 +9,14 @@ Demostrar el dominio de las últimas características de C# y la capacidad de mo
 
 ---
 
-## Stack Tecnológico
+## 💻 Stack Tecnológico
 - **Lenguaje:** C# 13.
 - **Framework:** .NET 9 SDK.
 - **Paradigma:** Programación Orientada a Objetos (POO) con un enfoque funcional en el motor de reglas.
 
 ---
 
-## Características Técnicas (The "Flex" Zone)
+## 📖 Características Técnicas (The "Flex" Zone)
 Para los que vienen a ver el código, aquí destaco lo más interesante:
 
 - **Uso de C# Moderno:** Implementación de Primary Constructors en clases clave como Ronda y Mano, y Records para estructuras de datos inmutables como Carta y Turno.
@@ -26,7 +26,7 @@ Para los que vienen a ver el código, aquí destaco lo más interesante:
 
 ---
 
-##📂 Arquitectura del proyecto
+## 📂 Arquitectura del proyecto
 ```
 src/
 ├── Program.cs                      # Punto de entrada
@@ -51,7 +51,7 @@ src/
 
 ---
 
-##⚙️ Instalación y Ejecución
+## ⚙️ Instalación y Ejecución
 Asegurate de tener instalado el SDK de .NET 9.
 - **Clonar el repositorio:**
   ```bash
