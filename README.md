@@ -34,7 +34,7 @@ Para los que vienen a ver el código, aquí destaco lo más interesante:
 
 ## 🏗️ Arquitectura y Flujo de Datos
 El diseño del motor se basa en una separación estricta de responsabilidades para garantizar que la lógica del Truco sea independiente de la interfaz de salida.
-
+```mermaid
 graph TD
     subgraph UI [Capa de Interfaz]
         P[Pantallas.cs] --> |Muestra estado| Console[Consola]
@@ -63,6 +63,7 @@ graph TD
     style UI fill:#f9f,stroke:#333,stroke-width:2px
     style Reglas fill:#bbf,stroke:#333,stroke-width:2px
     style Core fill:#dfd,stroke:#333,stroke-width:2px
+```
 
 ### Componentes Principales
 - *El Árbitro (Orquestador de Estado):* Es la única entidad que conoce el estado global de la mano. Controla el flujo mediante una máquina de estados interna que valida si una acción (cantar truco, jugar carta o envido) es legal en el contexto actual.
