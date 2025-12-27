@@ -26,7 +26,7 @@ Para los que vienen a ver el código, aquí destaco lo más interesante:
 
 ---
 
-## Arquitectura del proyecto
+##📂 Arquitectura del proyecto
 ```
 src/
 ├── Program.cs                      # Punto de entrada
@@ -51,7 +51,7 @@ src/
 
 ---
 
-## Instalación y Ejecución
+##⚙️ Instalación y Ejecución
 Asegurate de tener instalado el SDK de .NET 9.
 - **Clonar el repositorio:**
   ```bash
