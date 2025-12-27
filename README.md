@@ -166,8 +166,10 @@ Las contribuciones son bienvenidas. Si querés agregar funcionalidades o mejorar
 
 ---
 ## Autor
+
 Joel Román Arancibia
 GitHub: @JRA-OK
+
 ---
 
 ### ⭐ Si te gustó el proyecto, dejá una estrella en GitHub!
