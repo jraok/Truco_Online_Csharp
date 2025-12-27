@@ -20,11 +20,28 @@ Para los que vienen a ver el código, aquí destaco lo más interesante:
 - **Pattern Matching Avanzado:** Aprovechamiento de las switch expressions para manejar la compleja jerarquía de cartas y las respuestas de los cantos.
 - **Arquitectura Desacoplada:** Separación total entre la lógica de juego (Truco.Core) y la interfaz de usuario (Truco.UI), permitiendo cambiar la consola por una interfaz gráfica en el futuro sin tocar el núcleo.
 
-## Estructura del Proyecto
-- **Modelos:** Definición de entidades básicas (Carta, Mazo, Jugador).
-- **Reglas:** El "corazón" matemático del juego. Define puntos y jerarquías.
-- **Juego:** Controladores de flujo como el Arbitro, que gestiona los turnos y estados de la partida.
-- **UI:** Interfaz de consola con manejo de colores para mejorar la experiencia de usuario.
+## Arquitectura del proyecto
+```
+src/
+├── Program.cs                      # Punto de entrada
+├── Truco_Core/                     # Lógica del juego
+│   ├── Juego/
+│   │   ├── Arbitro.cs             # Controlador principal del juego
+│   │   ├── Partida.cs             # Modelo de la partida
+│   │   ├── Mano.cs                # Modelo de cada mano
+│   │   ├── Ronda.cs               # Modelo de cada ronda (1 carta por jugador)
+│   │   └── Turno.cs               # Registro de una jugada
+│   ├── Modelos/
+│   │   ├── Carta.cs               # Representación de cartas
+│   │   ├── Jugador.cs             # Modelo del jugador
+│   │   └── Mazo.cs                # Baraja española (40 cartas)
+│   └── Reglas/
+│       ├── Operador.cs            # Lógica de cálculos (envido, jerarquías)
+│       ├── Envido.cs              # Tipos y modelos de Envido
+│       └── Truco.cs               # Tipos y modelos de Truco
+└── Truco_UI/
+    └── Pantallas.cs               # Sistema de visualización en consola
+```
 
 ## Instalación y Ejecución
 Asegurate de tener instalado el SDK de .NET 9.
@@ -40,4 +57,4 @@ Asegurate de tener instalado el SDK de .NET 9.
   ```bash
   dotnet run --project src/Truco_Online_Csharp.csproj
   ```
-  
+
