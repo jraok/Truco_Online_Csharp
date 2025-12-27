@@ -10,8 +10,11 @@ Demostrar el dominio de las últimas características de C# y la capacidad de mo
 ---
 
 ## 💻 Stack Tecnológico
+
 - **Lenguaje:** C# 13.
+
 - **Framework:** .NET 9 SDK.
+
 - **Paradigma:** Programación Orientada a Objetos (POO) con un enfoque funcional en el motor de reglas.
 
 ---
@@ -20,13 +23,59 @@ Demostrar el dominio de las últimas características de C# y la capacidad de mo
 Para los que vienen a ver el código, aquí destaco lo más interesante:
 
 - **Uso de C# Moderno:** Implementación de Primary Constructors en clases clave como Ronda y Mano, y Records para estructuras de datos inmutables como Carta y Turno.
+
 - **Motor de Reglas Funcional:** La clase Operador actúa como una biblioteca de funciones puras para calcular jerarquías, puntos de envido y sumas de truco, facilitando el testeo y la reutilización.
+
 - **Pattern Matching Avanzado:** Aprovechamiento de las switch expressions para manejar la compleja jerarquía de cartas y las respuestas de los cantos.
+
 - **Arquitectura Desacoplada:** Separación total entre la lógica de juego (Truco.Core) y la interfaz de usuario (Truco.UI), permitiendo cambiar la consola por una interfaz gráfica en el futuro sin tocar el núcleo.
 
 ---
 
-## 📂 Arquitectura del proyecto
+## 🏗️ Arquitectura y Flujo de Datos
+El diseño del motor se basa en una separación estricta de responsabilidades para garantizar que la lógica del Truco sea independiente de la interfaz de salida.
+
+graph TD
+    subgraph UI [Capa de Interfaz]
+        P[Pantallas.cs] --> |Muestra estado| Console[Consola]
+        P --> |Captura input| Program[Program.cs]
+    end
+
+    subgraph Core [Motor de Juego]
+        Program --> |Comanda acciones| A[Arbitro.cs]
+        A --> |Gestiona| Par[Partida.cs]
+        Par --> |Contiene| M[Mano.cs]
+        M --> |Fracciona en| R[Ronda.cs]
+    end
+
+    subgraph Reglas [Capa de Lógica Pura]
+        A --> |Consulta validación| O[Operador.cs]
+        M --> |Consulta puntos| O
+        O --> |Evalúa| C[Carta.cs]
+    end
+
+    subgraph Modelos [Entidades]
+        Par --> J[Jugador.cs]
+        A --> Mazo[Mazo.cs]
+        Mazo --> |Reparte| C
+    end
+
+    style UI fill:#f9f,stroke:#333,stroke-width:2px
+    style Reglas fill:#bbf,stroke:#333,stroke-width:2px
+    style Core fill:#dfd,stroke:#333,stroke-width:2px
+
+### Componentes Principales
+- *El Árbitro (Orquestador de Estado):* Es la única entidad que conoce el estado global de la mano. Controla el flujo mediante una máquina de estados interna que valida si una acción (cantar truco, jugar carta o envido) es legal en el contexto actual.
+
+- *El Operador (Lógica Pura):* Es un componente estático y sin estado (stateless). Se encarga exclusivamente de las matemáticas del juego: jerarquías de cartas, cálculo de puntos de envido y resolución de valores de los cantos. Al ser lógica pura, facilita enormemente la implementación de pruebas unitarias automáticas.
+
+- *Inmutabilidad con Records:* Se utilizan records para representar entidades como Carta y Turno, asegurando que la información que fluye a través del sistema no sufra efectos secundarios indeseados.
+
+- *Desacoplamiento de UI:* La capa de Pantallas solo tiene acceso de lectura al estado del Arbitro para renderizar la información en consola, pero no puede modificar las reglas del juego directamente.
+
+---
+
+## 📂 Estructura del proyecto
 ```
 src/
 ├── Program.cs                      # Punto de entrada
