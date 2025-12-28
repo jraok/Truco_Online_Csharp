@@ -1,6 +1,6 @@
 # **Truco Argentino - Core Engine (Console Edition)**
 [![License: MIT](https://img.shields.io/github/license/JRA-OK/Truco-Console-Csharp)](LICENSE)
-![Build Status](https://github.com/JRA-OK/Truco-Console-Csharp/workflows/build/badge.svg)
+![Build Status](https://github.com/JRA-OK/Truco-Console-Csharp/workflows/Build/badge.svg)
 
 Implementación del clásico juego de cartas argentino en C#, jugable desde la terminal.
 
