@@ -1,4 +1,5 @@
 # **Truco Argentino - Core Engine (Console Edition)**
+[![License: MIT](https://img.shields.io/github/license/tuusuario/truco-online-csharp)](LICENSE)
 
 Implementación del clásico juego de cartas argentino en C#, jugable desde la terminal.
 
